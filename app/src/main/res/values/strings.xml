@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Renessans7</string>
+    <string name="str_login">Login</string>
+    <string name="str_renessans">Renessans-7</string>
+    <string name="str_username">username</string>
+    <string name="str_password">password</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="str_fullname">F.I.O</string>
+    <string name="str_retype_password">retype password</string>
+    <string name="str_register">Register me</string>
+    <string name="str_error_username_length">username must be between 5 and 20 letters</string>
+    <string name="str_error_password_length">password must not be less than 6 letters</string>
+    <string name="str_retype_incorrrect">retyped incorrectly</string>
+    <string name="str_teacher_group">\'s groups</string>
+    <string name="str_teachers">Teachers</string>
+    <string name="str_answers">Answers</string>
+    <string name="str_fullname_not_filled">Fullname is not correctly filled(First,last,middle names)</string>
+    <string name="str_is_teacher">I am a teacher</string>
+    <string name="str_network_error">Network connection failed!</string>
+    <string name="str_teacher_role">If you register as a teacher, you can create groups and upload tests for your groups</string>
+    <string name="str_password_error">Wrong password!</string>
+    <string name="str_username_error">Username not found!</string>
+    <string name="str_my_groups">My groups</string>
+    <string name="str_test_for_group">Tests uploaded for this group</string>
+    <string name="str_test_results">Test results</string>
+    <string name="str_add_a_group">Add a group</string>
+    <string name="str_enter_group_s_name">Enter group\'s name</string>
+    <string name="str_description_for_the_group">Description for the group</string>
+    <string name="str_select_file_uploading_option">Select file-uploading option</string>
+    <string name="str_through_phone_storage">Through phone storage</string>
+    <string name="str_through_uploaded_files">Through uploaded files</string>
+    <string name="str_upload_a_test">Upload a test</string>
+    <string name="str_error">Something went wrong!</string>
+    <string name="str_add">Add</string>
+    <string name="str_cancel">Cancel</string>
+    <string name="str_request_sent">Your request has been sent successfully!</string>
+</resources>

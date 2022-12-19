@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvLesson"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="24dp"
+    app:cardBackgroundColor="@color/lesson_item_color"
+    app:cardCornerRadius="8dp">
+
+    <TextView
+        android:id="@+id/tvTeacherName"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingStart="24dp"
+        android:text="Karimov Ulug'bek"
+        android:textColor="@color/lesson_name_color"
+        android:textSize="16sp" />
+
+</com.google.android.material.card.MaterialCardView>

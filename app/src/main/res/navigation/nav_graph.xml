@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/loginScreen">
+
+    <fragment
+        android:id="@+id/loginScreen"
+        android:name="com.example.renessans7.ui.screen.login.LoginScreen"
+        android:label="login_screen"
+        tools:layout="@layout/login_screen">
+        <action
+            android:id="@+id/action_loginScreen_to_registerScreen"
+            app:destination="@id/registerScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_loginScreen_to_mainScreen"
+            app:destination="@id/mainScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_loginScreen_to_teacherMainScreen"
+            app:destination="@id/teacherMainScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_loginScreen_to_teacherChooseScreen"
+            app:destination="@id/teacherChooseScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/registerScreen"
+        android:name="com.example.renessans7.ui.screen.registration.RegisterScreen"
+        android:label="RegisterScreen">
+        <action
+            android:id="@+id/action_registerScreen_to_teacherMainScreen"
+            app:destination="@id/teacherMainScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/teacherChooseScreen"
+        android:name="com.example.renessans7.ui.screen.selection.TeacherChooseScreen"
+        android:label="teacher_choose_screen"
+        tools:layout="@layout/teacher_choose_screen">
+        <action
+            android:id="@+id/action_teacherChooseScreen_to_mainScreen"
+            app:destination="@id/mainScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainScreen"
+        android:name="com.example.renessans7.ui.screen.main.MainScreen"
+        android:label="main_screen"
+        tools:layout="@layout/main_screen">
+        <action
+            android:id="@+id/action_mainScreen_to_joinedGroupTestScreen"
+            app:destination="@id/joinedGroupTestScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/testSolveScreen"
+        android:name="com.example.renessans7.ui.screen.testsolving.TestSolveScreen"
+        android:label="test_solve_screen"
+        tools:layout="@layout/test_solve_screen" />
+    <fragment
+        android:id="@+id/teacherMainScreen"
+        android:name="com.example.renessans7.ui.screen.teachermain.TeacherMainScreen"
+        android:label="teacher_main_screen"
+        tools:layout="@layout/teacher_main_screen">
+        <action
+            android:id="@+id/action_teacherMainScreen_to_groupTestScreen"
+            app:destination="@id/groupTestScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_teacherMainScreen_to_acceptToGroupScreen"
+            app:destination="@id/acceptToGroupScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupTestScreen"
+        android:name="com.example.renessans7.ui.screen.grouptest.GroupTestScreen"
+        android:label="group_test_screen"
+        tools:layout="@layout/group_test_screen">
+        <action
+            android:id="@+id/action_groupTestScreen_to_groupTestResultScreen"
+            app:destination="@id/groupTestResultScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupTestResultScreen"
+        android:name="com.example.renessans7.ui.screen.grouptestresult.GroupTestResultScreen"
+        android:label="group_test_result_screen"
+        tools:layout="@layout/group_test_result_screen" />
+    <fragment
+        android:id="@+id/acceptToGroupScreen"
+        android:name="com.example.renessans7.ui.screen.acceptrequest.AcceptToGroupScreen"
+        android:label="accept_to_group_screen"
+        tools:layout="@layout/accept_to_group_screen" />
+    <fragment
+        android:id="@+id/joinedGroupTestScreen"
+        android:name="com.example.renessans7.ui.screen.joinedGroupTests.JoinedGroupTestScreen"
+        android:label="joined_group_test_screen"
+        tools:layout="@layout/joined_group_test_screen">
+        <action
+            android:id="@+id/action_joinedGroupTestScreen_to_testSolveScreen"
+            app:destination="@id/testSolveScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+</navigation>

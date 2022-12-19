@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.screen.registration.RegisterScreen">
+
+    <ImageView
+        android:id="@+id/tvAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_marginTop="64dp"
+        android:src="@drawable/ic_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edtFullName"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="51dp"
+        android:background="@drawable/edittext_rounded_back"
+        android:hint="@string/str_fullname"
+        android:maxLines="1"
+        android:paddingHorizontal="24dp"
+        android:textColor="@color/grey_medium"
+        android:textColorHint="@color/grey_medium"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAppName" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edtUsernameLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="16dp"
+        app:errorIconTint="@color/main_red"
+        app:errorTextColor="@color/main_red"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtFullName">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtUsername"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/edittext_rounded_back"
+            android:hint="@string/str_username"
+            android:maxLines="1"
+            android:paddingHorizontal="24dp"
+            android:textColor="@color/grey_medium"
+            android:textColorHint="@color/grey_medium"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edtPasswordLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="16dp"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtUsernameLayout"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/toggle_color">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtPassword"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/edittext_rounded_back"
+            android:hint="@string/str_password"
+            android:maxLines="1"
+            android:paddingHorizontal="24dp"
+            android:textColor="@color/grey_medium"
+            android:textColorHint="@color/grey_medium"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edtRePasswordLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="16dp"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtPasswordLayout"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/toggle_color">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtRePassword"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/edittext_rounded_back"
+            android:hint="@string/str_retype_password"
+            android:maxLines="1"
+            android:paddingHorizontal="24dp"
+            android:textColor="@color/grey_medium"
+            android:textColorHint="@color/grey_medium"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkBoxTeacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/str_is_teacher"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:buttonTint="@color/main_red"
+        app:layout_constraintEnd_toEndOf="@id/edtRePasswordLayout"
+        app:layout_constraintTop_toBottomOf="@id/edtRePasswordLayout" />
+
+    <TextView
+        android:id="@+id/tvTeacherRole"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/str_teacher_role"
+        android:textAlignment="textEnd"
+        android:textColor="@color/black_main_grey"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/checkBoxTeacher"
+        app:layout_constraintStart_toStartOf="@id/edtRePasswordLayout"
+        app:layout_constraintTop_toBottomOf="@id/checkBoxTeacher" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/rounded_red_8_background"
+        android:clickable="false"
+        android:elevation="4dp"
+        android:text="@string/str_register"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

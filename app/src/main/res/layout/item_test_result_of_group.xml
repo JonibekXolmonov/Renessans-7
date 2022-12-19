@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/tvPupilName"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/textviw_test_result"
+        android:maxLines="1"
+        android:paddingHorizontal="8dp"
+        android:text="1. Xolmonov Jonibek Qahramon o'g'li"
+        android:textColor="@color/black_main_grey"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/rvResult"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/rvResult" />
+
+    <TextView
+        android:id="@+id/tvTestResult"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/textviw_test_result"
+        android:maxLines="1"
+        android:paddingHorizontal="4dp"
+        android:text="28/30"
+        android:textAlignment="center"
+        android:textColor="@color/black_main_grey"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/rvResult"
+        app:layout_constraintStart_toEndOf="@id/tvPupilName"
+        app:layout_constraintTop_toTopOf="@id/rvResult" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvResult"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toEndOf="@id/tvTestResult"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_correct_incorrect" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
