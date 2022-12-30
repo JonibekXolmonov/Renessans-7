@@ -23,6 +23,7 @@ import com.example.renessans7.utils.Constants.SPACE
 import com.example.renessans7.utils.Constants.TEST_BASE_URL
 import com.example.renessans7.utils.PDFUtil.loadPdfToViewer
 import com.example.renessans7.utils.back
+import com.example.renessans7.utils.helper.UiStateList
 import com.example.renessans7.utils.helper.UiStateObject
 import com.example.renessans7.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -50,6 +51,7 @@ class TestSolveScreen : Fragment(R.layout.test_solve_screen) {
     ): View {
         _binding = TestSolveScreenBinding.inflate(inflater, container, false)
         observeGroupTests()
+        observeAnswers()
         return binding.root
     }
 
@@ -125,6 +127,29 @@ class TestSolveScreen : Fragment(R.layout.test_solve_screen) {
         }
     }
 
+    private fun observeAnswers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.answers.collect {
+                    when (it) {
+                        UiStateList.LOADING -> {
+                        }
+
+                        is UiStateList.SUCCESS -> {
+                            refreshAnswerInsertion(it.data.map { an ->
+                                TestAnswers(0, an)
+                            })
+                            Log.d("TAG", "observeAnswers: ${it.data}")
+                        }
+                        is UiStateList.ERROR -> {
+                        }
+                        else -> {}
+                    }
+                }
+            }
+        }
+    }
+
     private fun initArray(numberOfQuestions: Int) = ArrayList<TestAnswers>().apply {
         for (i in 0 until numberOfQuestions)
             this.add(
@@ -139,6 +164,11 @@ class TestSolveScreen : Fragment(R.layout.test_solve_screen) {
         } catch (e: Exception) {
             binding.layoutAnswers!!.rvTestResultInsert.adapter = answerInsertionAdapter
         }
+    }
+
+    override fun onPause() {
+        viewModel.saveAnswers(answerInsertionAdapter.currentList.map { it.testAnswer })
+        super.onPause()
     }
 
     override fun onDestroyView() {

@@ -14,6 +14,7 @@ import com.example.renessans7.models.group.Group
 import com.example.renessans7.utils.Constants.EXIST_FILE
 import com.example.renessans7.utils.Constants.GALLERY
 import com.example.renessans7.utils.ProgressBarDialog
+import com.example.renessans7.utils.isNotEmpty
 import com.example.renessans7.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,17 +48,21 @@ class AddGroupDialog(private val onAddSuccess: (Group) -> Unit) :
 
     private fun initViews() {
         binding.btnAdd.setOnClickListener {
-            loading.show()
-            viewModel.addGroup(getGroup()) {
-                it.onSuccess {
-                    onAddSuccess(it.data)
-                    loading.dismiss()
-                    dismissNow()
+            if (binding.edtGroupName.isNotEmpty() && binding.edtGroupDescription.isNotEmpty()) {
+                loading.show()
+                viewModel.addGroup(getGroup()) {
+                    it.onSuccess {
+                        onAddSuccess(it.data)
+                        loading.dismiss()
+                        dismissNow()
+                    }
+                    it.onFailure {
+                        loading.dismiss()
+                        toast(getString(R.string.str_error))
+                    }
                 }
-                it.onFailure {
-                    loading.dismiss()
-                    toast(getString(R.string.str_error))
-                }
+            } else {
+                toast(getString(R.string.str_field_empty_group))
             }
         }
 

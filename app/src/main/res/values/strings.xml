@@ -69,4 +69,10 @@
     <string name="str_test_solving">Test Solving</string>
     <string name="str_not_all_answer_inserted">Not all answers inserted.</string>
     <string name="str_field_empty">Test size is not inserted.</string>
+    <string name="str_field_empty_group">Empty group name or description</string>
+    <string name="str_admin">Admin</string>
+    <string name="str_no_pupils">No strange pupils</string>
+    <string name="str_error_load">Test\'s pdf file loading error</string>
+    <string name="str_locked">Account was locked by admin.</string>
+    <string name="str_restore_success">Activated successfully</string>
 </resources>

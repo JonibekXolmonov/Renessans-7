@@ -31,6 +31,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_loginScreen_to_adminScreen"
+            app:destination="@id/adminScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
 
     </fragment>
     <fragment
@@ -50,7 +57,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/teacherChooseScreen"
@@ -79,14 +86,14 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_mainScreen_to_pupilNotificationScreen"
             app:destination="@id/pupilNotificationScreen"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/testSolveScreen"
@@ -131,7 +138,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/groupTestResultScreen"
@@ -165,4 +172,9 @@
         android:id="@+id/groupPupilsScreen"
         android:name="com.example.renessans7.ui.screen.grouppupils.GroupPupilsScreen"
         android:label="GroupPupilsScreen" />
+    <fragment
+        android:id="@+id/adminScreen"
+        android:name="com.example.renessans7.ui.screen.admin.AdminScreen"
+        android:label="admin_screen"
+        tools:layout="@layout/admin_screen" />
 </navigation>

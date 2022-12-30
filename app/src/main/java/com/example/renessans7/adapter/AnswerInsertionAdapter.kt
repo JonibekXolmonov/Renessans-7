@@ -38,6 +38,12 @@ class AnswerInsertionAdapter : ListAdapter<TestAnswers, AnswerInsertionAdapter.V
         holder.binding.apply {
 
             tvTestNumber.text = "${position + 1}"
+            when (getItem(position).testAnswer) {
+                A -> rbOptionA.isChecked = true
+                B -> rbOptionB.isChecked = true
+                C -> rbOptionC.isChecked = true
+                D -> rbOptionD.isChecked = true
+            }
 
             rbOptionA.setOnClickListener {
                 saveAnswer(position, A)

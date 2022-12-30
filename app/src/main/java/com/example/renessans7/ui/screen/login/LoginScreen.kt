@@ -13,6 +13,7 @@ import com.example.renessans7.databinding.LoginScreenBinding
 import com.example.renessans7.models.login.LoginRequest
 import com.example.renessans7.utils.*
 import com.example.renessans7.utils.Constants.PUPIL
+import com.example.renessans7.utils.Constants.TEACHER
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -100,6 +101,8 @@ class LoginScreen : Fragment(R.layout.login_screen) {
                     toast(getString(R.string.str_username_error))
                 } else if (it.message?.contains("406") == true) {
                     toast(getString(R.string.str_password_error))
+                } else if (it.message?.contains("403") == true) {
+                    toast(getString(R.string.str_locked))
                 } else {
                     toast(getString(R.string.str_network_error))
                 }
@@ -112,8 +115,11 @@ class LoginScreen : Fragment(R.layout.login_screen) {
     )
 
     private fun openScreen(role: String) {
-        if (role == PUPIL) findNavController().navigate(R.id.action_loginScreen_to_mainScreen)
-        else findNavController().navigate(R.id.action_loginScreen_to_teacherMainScreen)
+        when (role) {
+            PUPIL -> findNavController().navigate(R.id.action_loginScreen_to_mainScreen)
+            TEACHER -> findNavController().navigate(R.id.action_loginScreen_to_teacherMainScreen)
+            else -> findNavController().navigate(R.id.action_loginScreen_to_adminScreen)
+        }
     }
 
     override fun onDestroyView() {

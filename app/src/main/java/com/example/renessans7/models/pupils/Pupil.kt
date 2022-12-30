@@ -9,5 +9,6 @@ data class Class(
 
 data class Pupil(
     val pupilId: String,
-    val fullName: String
+    val fullName: String,
+    val isEnabled:Boolean
 )

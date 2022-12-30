@@ -7,10 +7,13 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.progressindicator.CircularProgressIndicatorSpec
 import com.google.android.material.progressindicator.IndeterminateDrawable
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -31,6 +34,15 @@ fun TextInputEditText.isNotBlank() = text.toString().isNotBlank()
 
 fun Fragment.toast(msg: String) {
     Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
+}
+
+private fun TabLayout.setUp(viewPager: ViewPager2, labels: List<String>) {
+    if (labels.size != viewPager.adapter?.itemCount)
+        throw Exception()
+
+    TabLayoutMediator(this, viewPager) { tab, position ->
+        tab.text = labels[position]
+    }.attach()
 }
 
 fun View.show() = kotlin.run {

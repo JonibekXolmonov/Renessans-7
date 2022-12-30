@@ -100,7 +100,13 @@ class RegisterScreen : Fragment(R.layout.register_screen) {
             }
             it.onFailure {
                 binding.btnRegister.disableLoading()
-                toast(getString(R.string.str_network_error))
+                if (it.localizedMessage?.contains("409") == true) {
+                    toast(getString(R.string.str_username_error))
+                } else if (it.message?.contains("406") == true) {
+                    toast(getString(R.string.str_password_error))
+                } else {
+                    toast(getString(R.string.str_network_error))
+                }
             }
         }
     }
@@ -114,7 +120,13 @@ class RegisterScreen : Fragment(R.layout.register_screen) {
             }
             it.onFailure {
                 binding.btnRegister.disableLoading()
-                toast(getString(R.string.str_network_error))
+                if (it.localizedMessage?.contains("409") == true) {
+                    toast(getString(R.string.str_username_error))
+                } else if (it.message?.contains("406") == true) {
+                    toast(getString(R.string.str_password_error))
+                } else {
+                    toast(getString(R.string.str_network_error))
+                }
             }
         }
     }

@@ -97,5 +97,11 @@ interface ApiService {
     suspend fun removePupilFromGroup(
         @Query("classId") classId: String,
         @Query("pupilId") pupilId: String
-    ):BaseResponse<Any>
+    ): BaseResponse<Any>
+
+    @GET("pupil")
+    suspend fun getAllPupils(): BaseResponse<List<Pupil>>
+
+    @PUT("stranger")
+    suspend fun removeUser(@Query("userId") pupilId: String): BaseResponse<Any>
 }

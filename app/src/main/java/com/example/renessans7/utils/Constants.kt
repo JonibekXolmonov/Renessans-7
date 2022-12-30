@@ -11,6 +11,7 @@ object Constants {
     const val D = "D"
     const val SPACE = " "
     const val PUPIL = "Pupil"
+    const val TEACHER = "Teacher"
     const val ID = "id"
     const val NAME = "name"
     const val GALLERY = 0

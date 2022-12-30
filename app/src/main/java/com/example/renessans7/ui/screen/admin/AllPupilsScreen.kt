@@ -1,4 +1,4 @@
-package com.example.renessans7.ui.screen.grouppupils
+package com.example.renessans7.ui.screen.admin
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,52 +10,45 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.renessans7.R
-import com.example.renessans7.adapter.GroupPupilAdapter
-import com.example.renessans7.databinding.GroupPupilsScreenBinding
+import com.example.renessans7.adapter.PupilsAdminAdapter
+import com.example.renessans7.adapter.TeachersAdminAdapter
+import com.example.renessans7.databinding.AllPupilsScreenBinding
 import com.example.renessans7.models.pupils.Pupil
 import com.example.renessans7.utils.*
-import com.example.renessans7.utils.Constants.ID
 import com.example.renessans7.utils.helper.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class GroupPupilsScreen : Fragment(R.layout.group_pupils_screen) {
+class AllPupilsScreen : Fragment(R.layout.all_pupils_screen) {
 
-    private var _binding: GroupPupilsScreenBinding? = null
+    private var _binding: AllPupilsScreenBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: GroupPupilsViewModel by viewModels<GroupPupilsViewModelImp>()
-    private val groupPupilAdapter by lazy { GroupPupilAdapter() }
+    private val viewModel: AdminViewModel by viewModels<AdminViewModelImp>()
+    private val pupilsAdapter by lazy { PupilsAdminAdapter() }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getPupils()
-    }
-
-    private fun getPupils() {
-        viewModel.getGroupPupils(requireArguments().get(ID).toString())
+        viewModel.getAllPupils()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = GroupPupilsScreenBinding.inflate(inflater, container, false)
-        setUpRequestObserver()
+        _binding = AllPupilsScreenBinding.inflate(inflater, container, false)
+        setUpPupilsObserver()
         initViews()
         return binding.root
     }
 
     private fun initViews() {
         binding.refreshLayout.setOnRefreshListener {
-            getPupils()
-        }
-
-        binding.ivBack.setOnClickListener {
-            back()
+            viewModel.getAllPupils()
         }
     }
 
-    private fun setUpRequestObserver() {
+    private fun setUpPupilsObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.pupils.collect {
@@ -66,10 +59,8 @@ class GroupPupilsScreen : Fragment(R.layout.group_pupils_screen) {
 
                         is UiStateObject.SUCCESS -> {
                             binding.refreshLayout.disableRefresh()
-                            binding.tvGroupName.text = it.data.data.name
-                            val groups = it.data.data.pupils.filter { it.isEnabled }
-                            if (groups.isNotEmpty()) {
-                                refreshAdapter(groups)
+                            if (it.data.data.isNotEmpty()) {
+                                refreshAdapter(it.data.data)
                                 binding.tvEmpty.hide()
                             } else binding.tvEmpty.show()
                         }
@@ -85,14 +76,17 @@ class GroupPupilsScreen : Fragment(R.layout.group_pupils_screen) {
     }
 
     private fun refreshAdapter(data: List<Pupil>) {
-        groupPupilAdapter.submitList(data)
-        binding.rvGroupPupils.adapter = groupPupilAdapter
+        pupilsAdapter.submitList(data)
+        binding.rvPupils.adapter = pupilsAdapter
 
-        groupPupilAdapter.onRemove = {
-            viewModel.removePupilFromGroup(requireArguments().get(ID).toString(), it) {
+        pupilsAdapter.onClick = { pupil, isActive ->
+            viewModel.removeUser(pupil.pupilId) {
                 it.onSuccess {
-                    getPupils()
-                    toast(getString(R.string.str_removed_success))
+                    if (isActive)
+                        toast(getString(R.string.str_restore_success))
+                    else
+                        toast(getString(R.string.str_removed_success))
+                    viewModel.getAllPupils()
                 }
                 it.onFailure {
                     toast(getString(R.string.str_error))
@@ -105,5 +99,4 @@ class GroupPupilsScreen : Fragment(R.layout.group_pupils_screen) {
         super.onDestroyView()
         _binding = null
     }
-
 }

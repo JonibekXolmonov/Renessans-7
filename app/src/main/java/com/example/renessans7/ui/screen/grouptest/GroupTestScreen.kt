@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.provider.DocumentsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -206,8 +207,9 @@ class GroupTestScreen : Fragment(R.layout.group_test_screen) {
 
     private fun getFileFromGallery() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.type = "*/*"
+        intent.type = "application/pdf"
         intent.addCategory(Intent.CATEGORY_OPENABLE)
+
         startForResult.launch(intent)
     }
 

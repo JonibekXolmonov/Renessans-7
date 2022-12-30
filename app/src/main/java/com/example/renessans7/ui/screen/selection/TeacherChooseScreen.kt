@@ -63,8 +63,9 @@ class TeacherChooseScreen : Fragment(R.layout.teacher_choose_screen) {
 
                         is UiStateObject.SUCCESS -> {
                             loading.hide()
-                            if (it.data.data.isNotEmpty()) {
-                                refreshTeachersAdapter(it.data.data)
+                            val teachers = it.data.data.filter { it.isEnabled }
+                            if (teachers.isNotEmpty()) {
+                                refreshTeachersAdapter(teachers)
                                 binding.tvEmpty.hide()
                                 binding.tvEmptyGroups.hide()
                             } else {
