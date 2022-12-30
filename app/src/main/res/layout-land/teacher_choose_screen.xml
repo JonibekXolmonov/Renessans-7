@@ -17,8 +17,49 @@
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            app:title="Teacher selection" />
+            android:layout_height="?actionBarSize">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                tools:ignore="RtlSymmetry">
+
+                <ImageView
+                    android:background="@drawable/textview_background"
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/left"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/tvGroupName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/str_teacher_selection"
+                    android:layout_marginEnd="8dp"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/ivBack"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivBack"
+                    app:layout_constraintTop_toTopOf="@id/ivBack" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -52,13 +93,27 @@
         tools:listitem="@layout/item_teacher_list" />
 
     <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/main_background"
+        android:gravity="center"
+        android:text="@string/str_no_teachers"
+        android:textColor="@color/black_5a5a5a"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/rvTeachers"
+        app:layout_constraintEnd_toEndOf="@id/rvTeachers"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar" />
+
+    <TextView
         android:id="@+id/tvTeacherName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="14dp"
         android:lineSpacingExtra="5sp"
-        android:text="Karimov Ulug'bek's groups"
         android:textColor="@color/black_white_actual"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@id/rvTeachers"
@@ -79,6 +134,21 @@
         app:layout_constraintTop_toBottomOf="@id/tvTeacherName"
         tools:listitem="@layout/item_group_list" />
 
+    <TextView
+        android:id="@+id/tvEmptyGroups"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/main_background"
+        android:gravity="center"
+        android:text="@string/str_no_groups_of_teacher"
+        android:textColor="@color/black_5a5a5a"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/rvTeachers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/rvTeacherGroups"
+        app:layout_constraintTop_toBottomOf="@id/appBar" />
+
     <Button
         android:id="@+id/btnJoin"
         android:layout_width="wrap_content"
@@ -88,7 +158,7 @@
         android:background="@drawable/stroke_button"
         android:enabled="false"
         android:paddingHorizontal="24dp"
-        android:text="Request to join"
+        android:text="@string/str_request_to_join"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"

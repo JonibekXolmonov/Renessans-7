@@ -5,15 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.renessans7.R
-import com.example.renessans7.databinding.ItemGroupListBinding
 import com.example.renessans7.databinding.ItemGroupTestBinding
-import com.example.renessans7.databinding.ItemTeacherListBinding
-import com.example.renessans7.models.group.Group
-import com.example.renessans7.models.teacher.Teacher
 import com.example.renessans7.models.test.Test
-import com.example.renessans7.utils.setStroke
-import java.text.SimpleDateFormat
 
 class GroupTestAdapter : ListAdapter<Test, GroupTestAdapter.VH>(DiffUtil()) {
 
@@ -60,10 +53,5 @@ class GroupTestAdapter : ListAdapter<Test, GroupTestAdapter.VH>(DiffUtil()) {
 
     override fun getItemViewType(position: Int): Int {
         return position
-    }
-
-    fun addGroup(test: Test) {
-        currentList.add(test)
-//        submitList(currentList)
     }
 }

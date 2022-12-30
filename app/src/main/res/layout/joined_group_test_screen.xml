@@ -27,6 +27,7 @@
                 tools:ignore="RtlSymmetry">
 
                 <ImageView
+                    android:background="@drawable/textview_background"
                     android:id="@+id/ivBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -73,15 +74,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBar" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvGroupTests"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:paddingHorizontal="24dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvUploadedTests"
-        tools:listitem="@layout/item_group_test" />
+        app:layout_constraintTop_toBottomOf="@id/tvUploadedTests">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvGroupTests"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_group_test" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/main_background"
+        android:gravity="center"
+        android:text="@string/str_no_tests"
+        android:textColor="@color/black_5a5a5a"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

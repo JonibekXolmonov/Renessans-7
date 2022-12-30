@@ -1,28 +1,27 @@
 package com.example.renessans7.ui.screen.joinedGroupTests
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.renessans7.R
 import com.example.renessans7.adapter.GroupTestAdapter
 import com.example.renessans7.databinding.JoinedGroupTestScreenBinding
-import com.example.renessans7.databinding.MainScreenBinding
 import com.example.renessans7.models.test.Test
-import com.example.renessans7.ui.screen.main.MainViewModel
-import com.example.renessans7.ui.screen.main.MainViewModelImp
-import com.example.renessans7.utils.Constants
+import com.example.renessans7.utils.*
 import com.example.renessans7.utils.Constants.ID
 import com.example.renessans7.utils.helper.UiStateObject
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class JoinedGroupTestScreen : Fragment(R.layout.joined_group_test_screen) {
 
     private var _binding: JoinedGroupTestScreenBinding? = null
@@ -32,6 +31,10 @@ class JoinedGroupTestScreen : Fragment(R.layout.joined_group_test_screen) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        getJoinedGroupTests()
+    }
+
+    private fun getJoinedGroupTests() {
         viewModel.getGroupTests(requireArguments().get(ID).toString())
     }
 
@@ -49,12 +52,19 @@ class JoinedGroupTestScreen : Fragment(R.layout.joined_group_test_screen) {
                 viewModel.tests.collect {
                     when (it) {
                         UiStateObject.LOADING -> {
+                            binding.refreshLayout.enableRefresh()
                         }
 
                         is UiStateObject.SUCCESS -> {
-                            refreshAdapter(it.data.data)
+                            binding.refreshLayout.disableRefresh()
+                            if (it.data.data.isNotEmpty()) {
+                                refreshAdapter(it.data.data)
+                                binding.tvEmpty.hide()
+                            } else binding.tvEmpty.show()
                         }
                         is UiStateObject.ERROR -> {
+                            binding.refreshLayout.disableRefresh()
+                            toast(getString(R.string.str_error))
                         }
                         else -> {}
                     }
@@ -66,8 +76,13 @@ class JoinedGroupTestScreen : Fragment(R.layout.joined_group_test_screen) {
     private fun refreshAdapter(data: List<Test>) {
         adapter.submitList(data)
         binding.rvGroupTests.adapter = adapter
-        adapter.onClick = {
-
+        adapter.onClick = { id ->
+            findNavController().navigate(
+                R.id.action_joinedGroupTestScreen_to_testSolveScreen,
+                bundleOf(
+                    ID to id
+                )
+            )
         }
     }
 
@@ -78,6 +93,14 @@ class JoinedGroupTestScreen : Fragment(R.layout.joined_group_test_screen) {
 
     private fun initViews() {
         binding.tvGroupName.text = requireArguments().get(Constants.NAME).toString()
+
+        binding.refreshLayout.setOnRefreshListener {
+            getJoinedGroupTests()
+        }
+
+        binding.ivBack.setOnClickListener {
+            back()
+        }
     }
 
     override fun onDestroyView() {

@@ -19,7 +19,9 @@ interface GroupTestViewModel {
     fun uploadTestFile(
         testFileUploadRequest: TestFileUploadRequest,
         file: MultipartBody.Part,
-        block: (Result<BaseResponse<Any>>) -> Unit
+        block: (Result<BaseResponse<Test>>) -> Unit
     )
+
+    fun forwardTest(testId: String, classId: String, block: (Result<BaseResponse<Any>>) -> Unit)
 
 }

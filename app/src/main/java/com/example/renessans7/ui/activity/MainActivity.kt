@@ -18,14 +18,10 @@ class MainActivity : FragmentActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    @Inject
-    lateinit var sharedPref: SharedPref
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
         initViews()
         setStatusBar()
@@ -41,6 +37,21 @@ class MainActivity : FragmentActivity() {
     private fun initViews() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        navHostFragment.navController
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

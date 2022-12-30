@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.renessans7.models.BaseResponse
 import com.example.renessans7.models.group.Group
 import com.example.renessans7.models.test.Test
+import com.example.renessans7.repository.AuthRepository
 import com.example.renessans7.repository.PupilRepository
 import com.example.renessans7.repository.TestRepository
 import com.example.renessans7.utils.helper.UiStateObject
@@ -15,8 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModelImp @Inject constructor(
-    private val pupilRepository: PupilRepository,
-    private val testRepository: TestRepository
+    private val pupilRepository: PupilRepository
 ) :
     ViewModel(), MainViewModel {
 

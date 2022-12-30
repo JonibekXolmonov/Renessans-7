@@ -29,7 +29,6 @@ class TestNumberAdapter : ListAdapter<Int, TestNumberAdapter.VH>(DiffUtil()) {
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         holder.binding.apply {
-            Log.d("TAG", "onBindViewHolder:${currentList} ${currentList.size}")
             tvTestNumber.text = getItem(position).toString()
         }
     }

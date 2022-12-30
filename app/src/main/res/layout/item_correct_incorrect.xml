@@ -4,4 +4,4 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="8dp"
     android:id="@+id/ivChecker"
-    android:src="@drawable/ic_correct" />
+    android:src="@drawable/ic_missed" />

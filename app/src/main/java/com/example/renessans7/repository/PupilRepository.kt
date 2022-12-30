@@ -7,4 +7,9 @@ class PupilRepository @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getJoinedGroups() = apiService.getJoinedGroups()
 
+    suspend fun getPupilPendingRequest() = apiService.getPupilPendingRequest()
+
+    suspend fun cancel(requestId: String) = apiService.cancel(requestId)
+
+
 }

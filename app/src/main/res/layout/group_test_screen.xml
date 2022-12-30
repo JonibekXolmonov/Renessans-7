@@ -27,12 +27,13 @@
                 tools:ignore="RtlSymmetry">
 
                 <ImageView
+                    android:background="@drawable/textview_background"
                     android:id="@+id/ivBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingVertical="10dp"
-                    android:paddingEnd="10dp"
                     android:paddingStart="4dp"
+                    android:paddingEnd="10dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/left"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -41,17 +42,17 @@
                     tools:ignore="ContentDescription" />
 
                 <TextView
-                    android:maxLines="1"
-                    app:layout_constraintEnd_toStartOf="@id/tvUpload"
-                    android:layout_marginEnd="8dp"
                     android:id="@+id/tvGroupName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:maxLines="1"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/ivBack"
+                    app:layout_constraintEnd_toStartOf="@id/tvUpload"
                     app:layout_constraintStart_toEndOf="@id/ivBack"
                     app:layout_constraintTop_toTopOf="@id/ivBack" />
 
@@ -68,14 +69,28 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:background="@drawable/textview_background"
                     android:id="@+id/uploadTest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/textview_background"
                     android:padding="4dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_upload_file"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/showPupils"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/showPupils"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/textview_background"
+                    android:padding="4dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_group"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -100,15 +115,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBar" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvGroupTests"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:paddingHorizontal="24dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvUploadedTests"
-        tools:listitem="@layout/item_group_test" />
+        app:layout_constraintTop_toBottomOf="@id/tvUploadedTests">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvGroupTests"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_group_test" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/main_background"
+        android:gravity="center"
+        android:text="@string/str_no_tests"
+        android:textColor="@color/black_5a5a5a"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,4 +37,5 @@
     <color name="black_5a5a5a">#000000</color>
     <color name="yellow">#EFB503</color>
     <color name="main_blue">#0C64E6</color>
+    <color name="warning">#FDC401</color>
 </resources>

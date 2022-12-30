@@ -17,7 +17,48 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize" />
+            android:layout_height="?actionBarSize">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                tools:ignore="RtlSymmetry">
+
+                <ImageView
+                    android:background="@drawable/textview_background"
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/left"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/tvGroupName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:text="@string/str_result_of_all_pupils_in_the_group"
+                    app:layout_constraintBottom_toBottomOf="@id/ivBack"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivBack"
+                    app:layout_constraintTop_toTopOf="@id/ivBack" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -48,12 +89,16 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
+            <include
+                android:id="@+id/testNumber"
+                layout="@layout/item_group_test_number" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvGroupTestResults"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
+                android:layout_below="@id/testNumber"
+                android:layout_marginHorizontal="24dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="40"
                 tools:listitem="@layout/item_test_result_of_group" />
@@ -61,5 +106,20 @@
         </RelativeLayout>
 
     </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/main_background"
+        android:gravity="center"
+        android:text="@string/str_no_test_result"
+        android:textColor="@color/black_5a5a5a"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.renessans7.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -40,7 +41,7 @@ class GroupsAdapter : ListAdapter<Group, GroupsAdapter.VH>(DiffUtil()) {
 
             tvGroupName.text = getItem(position).className
             tvGroupInfo.text = getItem(position).numberOfPupil
-            if (holder.adapterPosition == currentSelectedPos) root.setStroke(
+            if (holder.absoluteAdapterPosition == currentSelectedPos) root.setStroke(
                 3,
                 root.context.resources.getColor(R.color.main_red)
             )
@@ -50,7 +51,7 @@ class GroupsAdapter : ListAdapter<Group, GroupsAdapter.VH>(DiffUtil()) {
                 root.setStroke(3, root.context.resources.getColor(R.color.main_red))
                 onClick.invoke(getItem(position).classId, getItem(position).className)
                 lastSelectedPos = currentSelectedPos
-                currentSelectedPos = holder.adapterPosition
+                currentSelectedPos = holder.absoluteAdapterPosition
 
                 if (lastSelectedPos != -1) notifyItemChanged(lastSelectedPos)
             }
@@ -68,10 +69,5 @@ class GroupsAdapter : ListAdapter<Group, GroupsAdapter.VH>(DiffUtil()) {
 
     override fun getItemViewType(position: Int): Int {
         return position
-    }
-
-    fun addGroup(group: Group) {
-        currentList.add(group)
-//        submitList(currentList)
     }
 }

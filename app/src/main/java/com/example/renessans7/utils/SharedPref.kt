@@ -15,5 +15,4 @@ class SharedPref @Inject constructor(@ApplicationContext val context: Context) {
         get() = pref.getString(TOKEN, "")!!
         set(value) = pref.edit { this.putString(TOKEN, value) }
 
-
 }

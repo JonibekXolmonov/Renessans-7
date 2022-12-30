@@ -51,11 +51,25 @@ class GroupTestViewModelImp @Inject constructor(private val testRepository: Test
     override fun uploadTestFile(
         testFileUploadRequest: TestFileUploadRequest,
         file: MultipartBody.Part,
-        block: (Result<BaseResponse<Any>>) -> Unit
+        block: (Result<BaseResponse<Test>>) -> Unit
     ) {
         viewModelScope.launch {
             try {
                 block(Result.success(testRepository.uploadTestFile(testFileUploadRequest, file)))
+            } catch (e: Exception) {
+                block(Result.failure(e))
+            }
+        }
+    }
+
+    override fun forwardTest(
+        testId: String,
+        classId: String,
+        block: (Result<BaseResponse<Any>>) -> Unit
+    ) {
+        viewModelScope.launch {
+            try {
+                block(Result.success(testRepository.forwardTest(testId, classId)))
             } catch (e: Exception) {
                 block(Result.failure(e))
             }

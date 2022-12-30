@@ -4,7 +4,6 @@
     <string name="str_renessans">Renessans-7</string>
     <string name="str_username">username</string>
     <string name="str_password">password</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="str_fullname">F.I.O</string>
     <string name="str_retype_password">retype password</string>
@@ -35,4 +34,39 @@
     <string name="str_add">Add</string>
     <string name="str_cancel">Cancel</string>
     <string name="str_request_sent">Your request has been sent successfully!</string>
+    <string name="str_requests_sent_to_join">Requests sent to join</string>
+    <string name="str_following_pupils_asked_to_join_your_groups">Following pupils asked to join your groups</string>
+    <string name="str_forward_success">Test has been forwarded successfully!</string>
+    <string name="str_test_number">Test size</string>
+    <string name="str_test_name">Enter test\'s name</string>
+    <string name="str_enter_test_answers">Enter test answers</string>
+    <string name="str_test_info_insert">Adding test results</string>
+    <string name="str_done">Upload test</string>
+    <string name="str_test_add_success">Test has been uploaded successfully!</string>
+    <string name="str_your_result">Your result</string>
+    <string name="str_correct_answers">Correct answers:</string>
+    <string name="str_incorrect_answers">Incorrect answers:</string>
+    <string name="str_missing_answers">Missing answers:</string>
+    <string name="str_back_to_tests">Back to tests</string>
+    <string name="str_already_joined">You have already joined to this group!</string>
+    <string name="str_my_requests">Your teacher selection requests</string>
+    <string name="str_request">Requests of PENDING status</string>
+    <string name="str_group_pupils">All pupils in this class</string>
+    <string name="str_no_groups">No groups available.\nPress \'+\' to add a group</string>
+    <string name="str_no_requests">No requests found!</string>
+    <string name="str_no_members">No members in this group.</string>
+    <string name="str_no_tests">No tests available\nuploaded to this group.</string>
+    <string name="str_no_joined_groups">No joined groups found.\nPress \'+\' to request to join.</string>
+    <string name="str_no_pending">No requests of PENDING status.</string>
+    <string name="str_no_teachers">No teachers found.</string>
+    <string name="str_request_to_join">Request to join</string>
+    <string name="str_no_groups_of_teacher">No groups found.</string>
+    <string name="str_no_test_result">No test results found.</string>
+    <string name="str_removed_success">Removed successfully</string>
+    <string name="str_accept_success">Accepted successfully!</string>
+    <string name="str_result_of_all_pupils_in_the_group">Result of all pupils in the group</string>
+    <string name="str_teacher_selection">Teacher selection</string>
+    <string name="str_test_solving">Test Solving</string>
+    <string name="str_not_all_answer_inserted">Not all answers inserted.</string>
+    <string name="str_field_empty">Test size is not inserted.</string>
 </resources>

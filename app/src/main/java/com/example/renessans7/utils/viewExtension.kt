@@ -2,9 +2,11 @@ package com.example.renessans7.utils
 
 import android.content.Context
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.progressindicator.CircularProgressIndicatorSpec
@@ -22,6 +24,8 @@ fun AppCompatEditText.isNotBlank() = text.toString().isNotBlank()
 fun TextInputEditText.isErrorOrBlank(layout: TextInputLayout): Boolean {
     return layout.isErrorEnabled || !isNotBlank()
 }
+
+fun EditText.isNotEmpty() = text.isNotEmpty()
 
 fun TextInputEditText.isNotBlank() = text.toString().isNotBlank()
 
@@ -62,4 +66,16 @@ fun MaterialButton.setLoading(context: Context) {
 
 fun MaterialButton.disableLoading() {
     this.icon = null
+}
+
+fun SwipeRefreshLayout.enableRefresh() {
+    isRefreshing = true
+}
+
+fun SwipeRefreshLayout.disableRefresh() {
+    isRefreshing = false
+}
+
+fun Fragment.back() {
+    requireActivity().onBackPressed()
 }

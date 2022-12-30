@@ -22,7 +22,6 @@ object PDFUtil {
                     }
                 pdfView.fromStream(input)
                     .enableSwipe(true) // allows to block changing pages using swipe
-                    .swipeHorizontal(true)
                     .enableDoubletap(true)
                     .defaultPage(0)
                     .enableAnnotationRendering(false) // render annotations (such as comments, colors or forms)
@@ -31,7 +30,6 @@ object PDFUtil {
                     .enableAntialiasing(true) // improve rendering a little bit on low-res screens
                     // spacing between pages in dp. To define spacing color, set view background
                     .spacing(0)
-                    .pageFitPolicy(FitPolicy.WIDTH)
                     .load()
             }
         }

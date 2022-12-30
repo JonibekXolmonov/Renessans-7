@@ -1,76 +1,60 @@
 package com.example.renessans7.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.renessans7.databinding.ItemGroupTestNumberBinding
 import com.example.renessans7.databinding.ItemTestResultOfGroupBinding
-import com.example.renessans7.models.TestResult
-import com.example.renessans7.utils.Constants.NORMAL_TYPE
-import com.example.renessans7.utils.Constants.NUMBER_TYPE
+import com.example.renessans7.models.test.TestCheckResponse
 
-class GroupTestResultAdapter : ListAdapter<TestResult, ViewHolder>(DiffUtil()) {
+class GroupTestResultAdapter :
+    ListAdapter<TestCheckResponse, GroupTestResultAdapter.VH>(DiffUtil()) {
 
-    class DiffUtil : androidx.recyclerview.widget.DiffUtil.ItemCallback<TestResult>() {
-        override fun areItemsTheSame(oldItem: TestResult, newItem: TestResult): Boolean {
+    class DiffUtil : androidx.recyclerview.widget.DiffUtil.ItemCallback<TestCheckResponse>() {
+        override fun areItemsTheSame(
+            oldItem: TestCheckResponse,
+            newItem: TestCheckResponse
+        ): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: TestResult, newItem: TestResult): Boolean {
+        override fun areContentsTheSame(
+            oldItem: TestCheckResponse,
+            newItem: TestCheckResponse
+        ): Boolean {
             return oldItem == newItem
         }
     }
 
-    class VHNormal(val binding: ItemTestResultOfGroupBinding) : ViewHolder(binding.root)
-
-    class VHNumber(val binding: ItemGroupTestNumberBinding) : ViewHolder(binding.root)
+    class VH(val binding: ItemTestResultOfGroupBinding) : ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
-    ): ViewHolder {
-        return if (viewType == NORMAL_TYPE) VHNormal(
-            ItemTestResultOfGroupBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            )
+    ) = VH(
+        ItemTestResultOfGroupBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
         )
-        else VHNumber(
-            ItemGroupTestNumberBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            )
-        )
-    }
+    )
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        when (holder) {
-            is VHNumber -> {
-                holder.binding.apply {
-                    refreshTestNumberAdapter(rvTestNumber, 35)
-                }
+    @SuppressLint("SetTextI18n")
+    override fun onBindViewHolder(holder: VH, position: Int) {
+        val result = getItem(position)
+        holder.binding.apply {
+            refreshResultAdapter(result.result, rvResult)
+            tvPupilName.text = "${position + 1}. ".plus(result.fullName)
+            try {
+                tvDate.text = result.resultDate.substring(0, 10).plus("\n")
+                    .plus(result.resultDate.substring(10, 16))
+            } catch (e: Exception) {
+                tvDate.text = result.resultDate
             }
-            is VHNormal -> {
-                holder.binding.apply {
-
-                    tvPupilName.text = getItem(position).name
-                    tvTestResult.text = getItem(position).inc.plus("/").plus(getItem(position).cor)
-
-                    refreshResultAdapter(getItem(position).results, rvResult)
-                }
-            }
+            tvTestResult.text = "${result.unanswered}/${result.wrongAnswers}/${result.trueAnswers}"
         }
     }
 
-    private fun refreshTestNumberAdapter(rvTestNumber: RecyclerView, listSize: Int) {
-        rvTestNumber.isNestedScrollingEnabled = false
-        rvTestNumber.adapter = TestNumberAdapter().apply {
-            submitList(ArrayList<Int>().apply {
-                for (i in 0 until listSize) this.add(i + 1)
-            })
-        }
-    }
-
-    private fun refreshResultAdapter(results: List<Boolean>, rvResult: RecyclerView) {
+    private fun refreshResultAdapter(results: List<Boolean?>, rvResult: RecyclerView) {
         rvResult.isNestedScrollingEnabled = false
         rvResult.adapter = ResultAdapter().apply {
             submitList(results)
@@ -82,6 +66,6 @@ class GroupTestResultAdapter : ListAdapter<TestResult, ViewHolder>(DiffUtil()) {
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == 0) NUMBER_TYPE else NORMAL_TYPE
+        return position
     }
 }

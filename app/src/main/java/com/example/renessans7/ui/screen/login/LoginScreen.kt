@@ -1,14 +1,11 @@
 package com.example.renessans7.ui.screen.login
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.renessans7.R
@@ -16,8 +13,6 @@ import com.example.renessans7.databinding.LoginScreenBinding
 import com.example.renessans7.models.login.LoginRequest
 import com.example.renessans7.utils.*
 import com.example.renessans7.utils.Constants.PUPIL
-import com.example.renessans7.utils.Constants.REGISTER_SUCCESS
-import com.example.renessans7.utils.Constants.TEACHER
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -27,7 +22,6 @@ class LoginScreen : Fragment(R.layout.login_screen) {
     private var _binding: LoginScreenBinding? = null
     private val binding get() = _binding!!
     private val viewModel: LoginViewModel by viewModels<LoginViewModelImp>()
-    private var isFromRegister = false
 
     @Inject
     lateinit var sharedPref: SharedPref
@@ -79,18 +73,10 @@ class LoginScreen : Fragment(R.layout.login_screen) {
             }
 
             login(getUser())
-//            openScreen(TEACHER)
-
         }
 
         binding.tvRegister.setOnClickListener {
             openRegister()
-            setFragmentResultListener(
-                REGISTER_SUCCESS
-            ) { _, _ ->
-                isFromRegister = true
-                Log.d("TAG", "initViews: $isFromRegister")
-            }
         }
     }
 
@@ -105,15 +91,13 @@ class LoginScreen : Fragment(R.layout.login_screen) {
                 if (it.success) {
                     sharedPref.token = it.data.token
                     binding.btnLogin.disableLoading()
-                    if (!isFromRegister) openScreen(it.data.role)
-                    else openTeacherSelectionScreen()
+                    openScreen(it.data.role)
                 }
             }
             it.onFailure {
                 binding.btnLogin.disableLoading()
                 if (it.localizedMessage?.contains("409") == true) {
                     toast(getString(R.string.str_username_error))
-                    //openRegister()
                 } else if (it.message?.contains("406") == true) {
                     toast(getString(R.string.str_password_error))
                 } else {
@@ -121,10 +105,6 @@ class LoginScreen : Fragment(R.layout.login_screen) {
                 }
             }
         }
-    }
-
-    private fun openTeacherSelectionScreen() {
-        findNavController().navigate(R.id.action_loginScreen_to_teacherChooseScreen)
     }
 
     private fun getUser() = LoginRequest(

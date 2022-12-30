@@ -1,23 +1,17 @@
 package com.example.renessans7.ui.screen.registration
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.renessans7.R
 import com.example.renessans7.databinding.RegisterScreenBinding
 import com.example.renessans7.models.register.RegisterRequest
-import com.example.renessans7.ui.screen.login.LoginViewModel
-import com.example.renessans7.ui.screen.login.LoginViewModelImp
 import com.example.renessans7.utils.*
-import com.example.renessans7.utils.Constants.REGISTER_SUCCESS
 import com.example.renessans7.utils.Constants.SPACE
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -92,6 +86,7 @@ class RegisterScreen : Fragment(R.layout.register_screen) {
     }
 
     private fun register(isTeacher: Boolean) {
+        binding.btnRegister.setLoading(requireContext())
         if (isTeacher) registerTeacher()
         else registerPupil()
     }
@@ -99,15 +94,13 @@ class RegisterScreen : Fragment(R.layout.register_screen) {
     private fun registerPupil() {
         viewModel.registerAsPupil(getUser()) {
             it.onSuccess {
-//                sharedPref.token = it.data.token
-//                findNavController().navigate(R.id.action_registerScreen_to_teacherChooseScreen)
+                binding.btnRegister.setLoading(requireContext())
+                sharedPref.token = it.data.token
+                findNavController().navigate(R.id.action_registerScreen_to_mainScreen)
             }
             it.onFailure {
-                if (it.localizedMessage?.contains("403") == true) {
-                    setFragmentResult(REGISTER_SUCCESS, bundleOf())
-                    findNavController().popBackStack()
-                } else
-                    toast(getString(R.string.str_network_error))
+                binding.btnRegister.disableLoading()
+                toast(getString(R.string.str_network_error))
             }
         }
     }
@@ -115,15 +108,13 @@ class RegisterScreen : Fragment(R.layout.register_screen) {
     private fun registerTeacher() {
         viewModel.registerAsTeacher(getUser()) {
             it.onSuccess {
-//                sharedPref.token = it.data.token
-//                findNavController().navigate(R.id.action_registerScreen_to_teacherMainScreen)
+                binding.btnRegister.disableLoading()
+                sharedPref.token = it.data.token
+                findNavController().navigate(R.id.action_registerScreen_to_teacherMainScreen)
             }
             it.onFailure {
-                if (it.localizedMessage?.contains("403") == true) {
-                    setFragmentResult(REGISTER_SUCCESS, bundleOf())
-                    findNavController().popBackStack()
-                } else
-                    toast(getString(R.string.str_network_error))
+                binding.btnRegister.disableLoading()
+                toast(getString(R.string.str_network_error))
             }
         }
     }

@@ -1,7 +1,9 @@
 package com.example.renessans7.module.network
 
 import com.example.renessans7.module.service.ApiService
-import com.example.renessans7.utils.Constants.TOKEN
+import com.example.renessans7.utils.Constants.AUTHORIZATION
+import com.example.renessans7.utils.Constants.BASE_URL
+import com.example.renessans7.utils.Constants.BEARER
 import com.example.renessans7.utils.SharedPref
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -20,8 +22,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
-
-    private val BASE_URL: String = "http://10.10.3.13:8082/api/v1/"
 
     var gson: Gson = GsonBuilder()
         .setLenient()
@@ -52,8 +52,8 @@ class NetworkModule {
             val builder = chain.request().newBuilder()
             if (sharedPref.token.isNotEmpty()) {
                 builder.addHeader(
-                    "Authorization",
-                    "$TOKEN${sharedPref.token}"
+                    AUTHORIZATION,
+                    "$BEARER${sharedPref.token}"
                 )
             }
             chain.proceed(builder.build())

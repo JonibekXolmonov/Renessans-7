@@ -41,14 +41,14 @@ class TeachersAdapter : ListAdapter<Teacher, TeachersAdapter.VH>(DiffUtil()) {
 
             tvTeacherName.text = getItem(position).fullName
 
-            if (currentSelectedPos == holder.adapterPosition)
+            if (currentSelectedPos == holder.absoluteAdapterPosition)
                 root.setStroke(3, root.context.resources.getColor(R.color.main_red))
             else
                 root.strokeWidth = 0
 
             root.setOnClickListener {
                 lastSelectedPos = currentSelectedPos
-                currentSelectedPos = holder.adapterPosition
+                currentSelectedPos = holder.absoluteAdapterPosition
                 root.setStroke(3, root.context.resources.getColor(R.color.main_red))
                 onClick.invoke(getItem(position))
                 if (lastSelectedPos != -1) {

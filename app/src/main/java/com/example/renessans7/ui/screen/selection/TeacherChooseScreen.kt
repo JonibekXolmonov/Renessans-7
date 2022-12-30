@@ -1,7 +1,7 @@
 package com.example.renessans7.ui.screen.selection
 
+import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +17,8 @@ import com.example.renessans7.adapter.TeachersAdapter
 import com.example.renessans7.databinding.TeacherChooseScreenBinding
 import com.example.renessans7.models.group.Group
 import com.example.renessans7.models.teacher.Teacher
+import com.example.renessans7.utils.*
 import com.example.renessans7.utils.Constants.SPACE
-import com.example.renessans7.utils.hide
-import com.example.renessans7.utils.show
-import com.example.renessans7.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -33,10 +31,12 @@ class TeacherChooseScreen : Fragment(R.layout.teacher_choose_screen) {
     private val groupsAdapter by lazy { GroupsAdapter() }
     private val viewModel: SelectionViewModel by viewModels<SelectionViewModelImp>()
     private var classId = SPACE
+    private lateinit var loading: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getAllTeachers()
+        loading = ProgressBarDialog(requireContext())
     }
 
     override fun onCreateView(
@@ -58,13 +58,23 @@ class TeacherChooseScreen : Fragment(R.layout.teacher_choose_screen) {
                 viewModel.teachers.collect {
                     when (it) {
                         UiStateObject.LOADING -> {
+                            loading.show()
                         }
 
                         is UiStateObject.SUCCESS -> {
-                            refreshTeachersAdapter(it.data.data)
+                            loading.hide()
+                            if (it.data.data.isNotEmpty()) {
+                                refreshTeachersAdapter(it.data.data)
+                                binding.tvEmpty.hide()
+                                binding.tvEmptyGroups.hide()
+                            } else {
+                                binding.tvEmpty.show()
+                                binding.tvEmptyGroups.show()
+                            }
                         }
                         is UiStateObject.ERROR -> {
-
+                            loading.hide()
+                            toast(getString(R.string.str_error))
                         }
                         else -> {}
                     }
@@ -75,13 +85,23 @@ class TeacherChooseScreen : Fragment(R.layout.teacher_choose_screen) {
 
     private fun initViews() {
         binding.btnJoin.setOnClickListener {
+            loading.show()
             viewModel.joinToGroup(classId) {
                 it.onSuccess {
+                    loading.hide()
                     toast(getString(R.string.str_request_sent))
                 }
                 it.onFailure {
+                    loading.hide()
+                    if (it.localizedMessage?.contains("409") == true)
+                        toast(getString(R.string.str_already_joined))
+                    else toast(getString(R.string.str_error))
                 }
             }
+        }
+
+        binding.ivBack.setOnClickListener {
+            back()
         }
     }
 
@@ -97,11 +117,20 @@ class TeacherChooseScreen : Fragment(R.layout.teacher_choose_screen) {
     }
 
     private fun getGroups(teacherId: String) {
+        loading.show()
         viewModel.getTeacherGroups(teacherId) {
             it.onSuccess {
-                refreshGroupsAdapter(it.data)
+                loading.hide()
+                if (it.data.isNotEmpty()) {
+                    refreshGroupsAdapter(it.data)
+                    binding.tvEmptyGroups.hide()
+                } else {
+                    binding.tvEmptyGroups.show()
+                }
             }
             it.onFailure {
+                loading.hide()
+                toast(getString(R.string.str_error))
             }
         }
     }

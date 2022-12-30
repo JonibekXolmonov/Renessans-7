@@ -1,17 +1,11 @@
 package com.example.renessans7.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.renessans7.R
 import com.example.renessans7.databinding.ItemCorrectIncorrectBinding
-import com.example.renessans7.databinding.ItemGroupListBinding
-import com.example.renessans7.databinding.ItemTeacherListBinding
-import com.example.renessans7.models.group.Group
-import com.example.renessans7.models.teacher.Teacher
-import com.example.renessans7.utils.setStroke
 
 class ResultAdapter : ListAdapter<Boolean, ResultAdapter.VH>(DiffUtil()) {
 
@@ -35,8 +29,11 @@ class ResultAdapter : ListAdapter<Boolean, ResultAdapter.VH>(DiffUtil()) {
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         holder.binding.apply {
-            Log.d("TAG", "onBindViewHolder:${currentList} ${currentList.size}")
-            ivChecker.setImageResource(if (getItem(position)) R.drawable.ic_correct else R.drawable.ic_incorrect)
+            try {
+                ivChecker.setImageResource(if (getItem(position)) R.drawable.ic_correct else R.drawable.ic_incorrect)
+            } catch (e: Exception) {
+                ivChecker.setImageResource(R.drawable.ic_missed)
+            }
         }
     }
 

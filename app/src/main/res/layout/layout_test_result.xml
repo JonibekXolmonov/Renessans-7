@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginHorizontal="24dp"
+    app:cardCornerRadius="12dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_medium_grey">
+
+        <TextView
+            android:id="@+id/tvCongrats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:lineSpacingExtra="4sp"
+            android:text="@string/str_your_result"
+            android:textColor="@color/black_white_actual"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvCorrectAnswers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="8dp"
+            android:lineSpacingExtra="7sp"
+            android:text="@string/str_correct_answers"
+            android:textColor="@color/black_white_actual"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCongrats" />
+
+        <TextView
+            android:id="@+id/tvCorrectAnswersScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="7sp"
+            android:textColor="@color/test_result_value"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvCorrectAnswers"
+            app:layout_constraintStart_toEndOf="@id/tvCorrectAnswers"
+            app:layout_constraintTop_toTopOf="@id/tvCorrectAnswers" />
+
+        <TextView
+            android:id="@+id/tvIncorrectAnswers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="8dp"
+            android:lineSpacingExtra="7sp"
+            android:text="@string/str_incorrect_answers"
+            android:textColor="@color/black_white_actual"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCorrectAnswers" />
+
+        <TextView
+            android:id="@+id/tvIncorrectAnswersScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="7sp"
+            android:textColor="@color/test_result_value"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvIncorrectAnswers"
+            app:layout_constraintStart_toEndOf="@id/tvIncorrectAnswers"
+            app:layout_constraintTop_toTopOf="@id/tvIncorrectAnswers" />
+
+        <TextView
+            android:id="@+id/tvMissed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="8dp"
+            android:lineSpacingExtra="7sp"
+            android:text="@string/str_missing_answers"
+            android:textColor="@color/black_white_actual"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvIncorrectAnswers" />
+
+        <TextView
+            android:id="@+id/tvMissedScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="7sp"
+            android:textColor="@color/test_result_value"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvMissed"
+            app:layout_constraintStart_toEndOf="@id/tvMissed"
+            app:layout_constraintTop_toTopOf="@id/tvMissed" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvNext"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvMissed"
+            app:strokeColor="@color/main_green"
+            app:strokeWidth="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/main_green"
+                android:gravity="center"
+                android:lineSpacingExtra="5sp"
+                android:text="@string/str_back_to_tests"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

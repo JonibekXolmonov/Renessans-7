@@ -1,5 +1,6 @@
 package com.example.renessans7.ui.screen.addgroup
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.example.renessans7.models.group.AddGroupRequest
 import com.example.renessans7.models.group.Group
 import com.example.renessans7.utils.Constants.EXIST_FILE
 import com.example.renessans7.utils.Constants.GALLERY
+import com.example.renessans7.utils.ProgressBarDialog
 import com.example.renessans7.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +25,12 @@ class AddGroupDialog(private val onAddSuccess: (Group) -> Unit) :
     private var _binding: LayoutAddGroupBinding? = null
     private val binding get() = _binding!!
     private val viewModel: AddGroupViewModel by viewModels<AddGroupViewModelImp>()
+    private lateinit var loading: Dialog
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        loading = ProgressBarDialog(requireActivity())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -32,6 +39,7 @@ class AddGroupDialog(private val onAddSuccess: (Group) -> Unit) :
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
@@ -39,13 +47,15 @@ class AddGroupDialog(private val onAddSuccess: (Group) -> Unit) :
 
     private fun initViews() {
         binding.btnAdd.setOnClickListener {
+            loading.show()
             viewModel.addGroup(getGroup()) {
                 it.onSuccess {
                     onAddSuccess(it.data)
+                    loading.dismiss()
                     dismissNow()
                 }
                 it.onFailure {
-                    toast(it.localizedMessage)
+                    loading.dismiss()
                     toast(getString(R.string.str_error))
                 }
             }

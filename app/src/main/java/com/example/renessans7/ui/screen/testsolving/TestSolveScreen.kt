@@ -1,18 +1,33 @@
 package com.example.renessans7.ui.screen.testsolving
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.renessans7.R
 import com.example.renessans7.adapter.AnswerInsertionAdapter
 import com.example.renessans7.databinding.TestSolveScreenBinding
 import com.example.renessans7.models.test.TestAnswers
+import com.example.renessans7.models.test.TestCheckRequest
+import com.example.renessans7.ui.screen.testresult.TestResultDialog
 import com.example.renessans7.utils.Constants.A
+import com.example.renessans7.utils.Constants.ID
+import com.example.renessans7.utils.Constants.NULL
+import com.example.renessans7.utils.Constants.SPACE
+import com.example.renessans7.utils.Constants.TEST_BASE_URL
 import com.example.renessans7.utils.PDFUtil.loadPdfToViewer
+import com.example.renessans7.utils.back
+import com.example.renessans7.utils.helper.UiStateObject
+import com.example.renessans7.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 @AndroidEntryPoint
@@ -23,11 +38,18 @@ class TestSolveScreen : Fragment(R.layout.test_solve_screen) {
     private val answerInsertionAdapter by lazy { AnswerInsertionAdapter() }
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var bottomSheet: View
+    private val viewModel: TestViewModel by viewModels<TestViewModelImp>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getTestById(requireArguments().get(ID).toString())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = TestSolveScreenBinding.inflate(inflater, container, false)
+        observeGroupTests()
         return binding.root
     }
 
@@ -37,14 +59,6 @@ class TestSolveScreen : Fragment(R.layout.test_solve_screen) {
     }
 
     private fun initViews() {
-
-        loadPdfToViewer(
-            "http://10.10.3.13:8082/file/8fc39307-00a5-4382-8c59-4080769b6671.pdf",
-            binding.pdfViewer!!
-        )
-
-        refreshAnswerInsertion(getFake())
-
         try {
             bottomSheet = binding.layoutAnswers!!.root
 
@@ -59,15 +73,62 @@ class TestSolveScreen : Fragment(R.layout.test_solve_screen) {
                     bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             //this is tablet
+        }
+
+        binding.btnFinish.setOnClickListener {
+            viewModel.check(getTestResult()) {
+                it.onSuccess {
+                    TestResultDialog(it.data) {
+                        requireActivity().onBackPressed()
+                    }.show(childFragmentManager, this::class.simpleName)
+
+                }
+                it.onFailure {
+                    toast(getString(R.string.str_error))
+                }
+            }
+        }
+
+        binding.ivBack.setOnClickListener {
+            back()
         }
     }
 
-    private fun getFake() = ArrayList<TestAnswers>().apply {
-        for (i in 0 until Random.nextInt(20, 40))
+    private fun getTestResult() = TestCheckRequest(
+        testId = requireArguments().get(ID).toString(),
+        pupilAnswers = answerInsertionAdapter.currentList.map { it.testAnswer }
+    )
+
+    private fun observeGroupTests() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.test.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                        }
+
+                        is UiStateObject.SUCCESS -> {
+                            loadPdfToViewer(
+                                TEST_BASE_URL.plus(it.data.data.fileUrl),
+                                binding.pdfViewer!!
+                            )
+                            refreshAnswerInsertion(initArray(it.data.data.numberOfQuestions))
+                        }
+                        is UiStateObject.ERROR -> {
+                        }
+                        else -> {}
+                    }
+                }
+            }
+        }
+    }
+
+    private fun initArray(numberOfQuestions: Int) = ArrayList<TestAnswers>().apply {
+        for (i in 0 until numberOfQuestions)
             this.add(
-                TestAnswers(i, A)
+                TestAnswers(i, NULL)
             )
     }
 
@@ -77,9 +138,6 @@ class TestSolveScreen : Fragment(R.layout.test_solve_screen) {
             binding.rvTestResultInsert!!.adapter = answerInsertionAdapter
         } catch (e: Exception) {
             binding.layoutAnswers!!.rvTestResultInsert.adapter = answerInsertionAdapter
-        }
-        answerInsertionAdapter.onAnswerSelected = {
-
         }
     }
 

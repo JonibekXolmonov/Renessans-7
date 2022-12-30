@@ -25,11 +25,23 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical">
 
+                <ImageView
+                    android:background="@drawable/textview_background"
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/left"
+                    tools:ignore="ContentDescription" />
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Test Solving"
+                    android:text="@string/str_test_solving"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 

@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_marginHorizontal="24dp"
+    android:id="@+id/testNumber"
     android:layout_height="wrap_content"
     android:gravity="center_vertical">
 
@@ -21,13 +23,28 @@
         app:layout_constraintTop_toTopOf="@id/rvResult" />
 
     <TextView
-        android:id="@+id/tvTestResult"
-        android:layout_width="70dp"
+        android:id="@+id/tvDate"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:background="@drawable/textviw_test_result"
         android:maxLines="1"
         android:paddingHorizontal="4dp"
-        android:text="inc/cor"
+        android:text="Date"
+        android:textAlignment="center"
+        android:textColor="@color/black_main_grey"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/rvResult"
+        app:layout_constraintStart_toEndOf="@id/tvPupilName"
+        app:layout_constraintTop_toTopOf="@id/rvResult" />
+
+    <TextView
+        android:id="@+id/tvTestResult"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/textviw_test_result"
+        android:maxLines="1"
+        android:paddingHorizontal="4dp"
+        android:text="un/in/cor"
         android:textAlignment="center"
         android:textColor="@color/black_main_grey"
         android:textSize="16sp"

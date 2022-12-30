@@ -1,6 +1,7 @@
 package com.example.renessans7.ui.screen.teachermain
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +18,9 @@ import com.example.renessans7.adapter.GroupsAdapter
 import com.example.renessans7.databinding.TeacherMainScreenBinding
 import com.example.renessans7.models.group.Group
 import com.example.renessans7.ui.screen.addgroup.AddGroupDialog
+import com.example.renessans7.utils.*
 import com.example.renessans7.utils.Constants.ID
 import com.example.renessans7.utils.Constants.NAME
-import com.example.renessans7.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -55,13 +56,21 @@ class TeacherMainScreen : Fragment(R.layout.teacher_main_screen) {
                 viewModel.groups.collect {
                     when (it) {
                         UiStateObject.LOADING -> {
+                            binding.refreshLayout.enableRefresh()
                         }
 
                         is UiStateObject.SUCCESS -> {
-                            refreshGroupsAdapter(it.data.data)
+                            binding.refreshLayout.disableRefresh()
+                            if (it.data.data.isNotEmpty()) {
+                                refreshGroupsAdapter(it.data.data)
+                                binding.tvEmpty.hide()
+                            } else {
+                                binding.tvEmpty.show()
+                            }
                         }
                         is UiStateObject.ERROR -> {
-
+                            binding.refreshLayout.disableRefresh()
+                            toast(getString(R.string.str_error))
                         }
                         else -> {}
                     }
@@ -80,6 +89,14 @@ class TeacherMainScreen : Fragment(R.layout.teacher_main_screen) {
 
         binding.ivNotification.setOnClickListener {
             findNavController().navigate(R.id.action_teacherMainScreen_to_acceptToGroupScreen)
+        }
+
+        binding.refreshLayout.setOnRefreshListener {
+            viewModel.getTeacherGroups()
+        }
+
+        binding.ivBack.setOnClickListener {
+            back()
         }
     }
 

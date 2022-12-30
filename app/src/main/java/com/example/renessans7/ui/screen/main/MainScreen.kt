@@ -17,6 +17,7 @@ import com.example.renessans7.adapter.GroupsAdapter
 import com.example.renessans7.databinding.MainScreenBinding
 import com.example.renessans7.databinding.TeacherChooseScreenBinding
 import com.example.renessans7.models.group.Group
+import com.example.renessans7.utils.*
 import com.example.renessans7.utils.Constants.ID
 import com.example.renessans7.utils.Constants.NAME
 import com.example.renessans7.utils.helper.UiStateObject
@@ -51,12 +52,20 @@ class MainScreen : Fragment(R.layout.main_screen) {
                 viewModel.joinedGroups.collect {
                     when (it) {
                         UiStateObject.LOADING -> {
+                            binding.refreshLayout.enableRefresh()
                         }
 
                         is UiStateObject.SUCCESS -> {
-                            refreshAdapter(it.data.data)
+                            binding.refreshLayout.disableRefresh()
+                            if (it.data.data.isNotEmpty()) {
+                                refreshAdapter(it.data.data)
+                                binding.tvEmpty.hide()
+                            }
+                            else binding.tvEmpty.show()
                         }
                         is UiStateObject.ERROR -> {
+                            binding.refreshLayout.disableRefresh()
+                            toast(getString(R.string.str_error))
                         }
                         else -> {}
                     }
@@ -83,7 +92,19 @@ class MainScreen : Fragment(R.layout.main_screen) {
     }
 
     private fun initViews() {
+        binding.ivRequestToGroup.setOnClickListener {
+            findNavController().navigate(R.id.action_mainScreen_to_teacherChooseScreen)
+        }
+        binding.ivCheckRequests.setOnClickListener {
+            findNavController().navigate(R.id.action_mainScreen_to_pupilNotificationScreen)
+        }
 
+        binding.refreshLayout.setOnRefreshListener {
+            viewModel.getJoinedGroups()
+        }
+        binding.ivBack.setOnClickListener {
+            back()
+        }
     }
 
     override fun onDestroyView() {

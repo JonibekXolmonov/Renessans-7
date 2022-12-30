@@ -31,13 +31,6 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/action_loginScreen_to_teacherChooseScreen"
-            app:destination="@id/teacherChooseScreen"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
 
     </fragment>
     <fragment
@@ -51,6 +44,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_registerScreen_to_mainScreen"
+            app:destination="@id/mainScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/teacherChooseScreen"
@@ -73,6 +73,20 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mainScreen_to_teacherChooseScreen"
+            app:destination="@id/teacherChooseScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_mainScreen_to_pupilNotificationScreen"
+            app:destination="@id/pupilNotificationScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/testSolveScreen"
@@ -111,6 +125,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_groupTestScreen_to_groupPupilsScreen"
+            app:destination="@id/groupPupilsScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/groupTestResultScreen"
@@ -135,4 +156,13 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+    <fragment
+        android:id="@+id/pupilNotificationScreen"
+        android:name="com.example.renessans7.ui.screen.pupilrequestcheck.PupilNotificationScreen"
+        android:label="pupil_notification_screen"
+        tools:layout="@layout/pupil_notification_screen" />
+    <fragment
+        android:id="@+id/groupPupilsScreen"
+        android:name="com.example.renessans7.ui.screen.grouppupils.GroupPupilsScreen"
+        android:label="GroupPupilsScreen" />
 </navigation>

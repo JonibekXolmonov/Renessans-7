@@ -13,8 +13,6 @@ import com.example.renessans7.utils.Constants.D
 
 class AnswerInsertionAdapter : ListAdapter<TestAnswers, AnswerInsertionAdapter.VH>(DiffUtil()) {
 
-    lateinit var onAnswerSelected: ((String) -> Unit)
-
     class DiffUtil : androidx.recyclerview.widget.DiffUtil.ItemCallback<TestAnswers>() {
         override fun areItemsTheSame(oldItem: TestAnswers, newItem: TestAnswers): Boolean {
             return oldItem == newItem
@@ -42,19 +40,15 @@ class AnswerInsertionAdapter : ListAdapter<TestAnswers, AnswerInsertionAdapter.V
             tvTestNumber.text = "${position + 1}"
 
             rbOptionA.setOnClickListener {
-                onAnswerSelected(A)
                 saveAnswer(position, A)
             }
             rbOptionB.setOnClickListener {
-                onAnswerSelected(B)
                 saveAnswer(position, B)
             }
             rbOptionC.setOnClickListener {
-                onAnswerSelected(C)
                 saveAnswer(position, C)
             }
             rbOptionD.setOnClickListener {
-                onAnswerSelected(D)
                 saveAnswer(position, D)
             }
         }
@@ -62,7 +56,6 @@ class AnswerInsertionAdapter : ListAdapter<TestAnswers, AnswerInsertionAdapter.V
 
     private fun saveAnswer(position: Int, answer: String) {
         currentList[position].testAnswer = answer
-//        submitList(currentList)
     }
 
     override fun getItemId(position: Int): Long {
