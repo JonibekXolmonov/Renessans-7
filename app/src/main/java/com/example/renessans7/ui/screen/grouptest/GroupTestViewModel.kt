@@ -24,4 +24,11 @@ interface GroupTestViewModel {
 
     fun forwardTest(testId: String, classId: String, block: (Result<BaseResponse<Any>>) -> Unit)
 
+    fun updateTestVisibility(
+        testId: String,
+        classId: String,
+        visible: Boolean,
+        block: (Result<BaseResponse<Any>>) -> Unit
+    )
+
 }

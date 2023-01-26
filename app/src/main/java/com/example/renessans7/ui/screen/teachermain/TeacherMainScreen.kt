@@ -15,10 +15,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.renessans7.utils.helper.UiStateObject
 import com.example.renessans7.R
 import com.example.renessans7.adapter.GroupsAdapter
+import com.example.renessans7.adapter.GroupsTeacherAdapter
 import com.example.renessans7.databinding.TeacherMainScreenBinding
 import com.example.renessans7.models.group.Group
 import com.example.renessans7.ui.screen.addgroup.AddGroupDialog
 import com.example.renessans7.utils.*
+import com.example.renessans7.utils.Constants.BLANK
 import com.example.renessans7.utils.Constants.ID
 import com.example.renessans7.utils.Constants.NAME
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +31,7 @@ class TeacherMainScreen : Fragment(R.layout.teacher_main_screen) {
 
     private var _binding: TeacherMainScreenBinding? = null
     private val binding get() = _binding!!
-    private val groupsAdapter by lazy { GroupsAdapter() }
+    private val groupsAdapter by lazy { GroupsTeacherAdapter() }
     private val viewModel: TeacherGroupViewModel by viewModels<TeacherGroupViewModelImp>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,10 +64,12 @@ class TeacherMainScreen : Fragment(R.layout.teacher_main_screen) {
                         is UiStateObject.SUCCESS -> {
                             binding.refreshLayout.disableRefresh()
                             if (it.data.data.isNotEmpty()) {
+                                binding.rvMyGroups.show()
                                 refreshGroupsAdapter(it.data.data)
                                 binding.tvEmpty.hide()
                             } else {
                                 binding.tvEmpty.show()
+                                binding.rvMyGroups.hide()
                             }
                         }
                         is UiStateObject.ERROR -> {
@@ -82,7 +86,7 @@ class TeacherMainScreen : Fragment(R.layout.teacher_main_screen) {
     private fun initViews() {
 
         binding.ivAddGroup.setOnClickListener {
-            AddGroupDialog {
+            AddGroupDialog(BLANK) {
                 viewModel.getTeacherGroups()
             }.show(childFragmentManager, this::class.simpleName)
         }
@@ -103,7 +107,6 @@ class TeacherMainScreen : Fragment(R.layout.teacher_main_screen) {
 
     private fun refreshGroupsAdapter(groups: List<Group>) {
         groupsAdapter.submitList(groups)
-        groupsAdapter.setPosToDefault()
         binding.rvMyGroups.adapter = groupsAdapter
 
         groupsAdapter.onClick = { id, name ->
@@ -112,6 +115,12 @@ class TeacherMainScreen : Fragment(R.layout.teacher_main_screen) {
                     ID to id, NAME to name
                 )
             )
+        }
+
+        groupsAdapter.onEdit = { group ->
+            AddGroupDialog(group.classId) {
+                viewModel.getTeacherGroups()
+            }.show(childFragmentManager, this::class.simpleName)
         }
     }
 

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.provider.DocumentsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.renessans7.R
-import com.example.renessans7.adapter.GroupTestAdapter
+import com.example.renessans7.adapter.GroupTestTeacherAdapter
 import com.example.renessans7.databinding.GroupTestScreenBinding
 import com.example.renessans7.models.test.Test
 import com.example.renessans7.models.test.TestFileUploadRequest
@@ -48,9 +47,21 @@ class GroupTestScreen : Fragment(R.layout.group_test_screen) {
 
     private var _binding: GroupTestScreenBinding? = null
     private val binding get() = _binding!!
-    private val groupTestAdapter by lazy { GroupTestAdapter() }
+    private val groupTestAdapter by lazy { GroupTestTeacherAdapter() }
     private val viewModel: GroupTestViewModel by viewModels<GroupTestViewModelImp>()
     private var fileUrl: Uri? = null
+    private lateinit var loading: ProgressBarDialog
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        getGroupTests()
+
+        loading = ProgressBarDialog(requireContext())
+    }
+
+    private fun getGroupTests() {
+        viewModel.getGroupTests(getGroupId())
+    }
 
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -62,7 +73,7 @@ class GroupTestScreen : Fragment(R.layout.group_test_screen) {
 
     private fun showTestInfoInsertDialog() {
         TestInfoInsertDialog {
-            it.classId = requireArguments().get(ID).toString()
+            it.classId = getGroupId()
             uploadTest(it)
         }.show(childFragmentManager, this::class.simpleName)
     }
@@ -77,7 +88,7 @@ class GroupTestScreen : Fragment(R.layout.group_test_screen) {
                 if (it.success) {
                     binding.refreshLayout.disableRefresh()
                     toast(getString(R.string.str_test_add_success))
-                    viewModel.getGroupTests(requireArguments().get(ID).toString())
+                    viewModel.getGroupTests(getGroupId())
                 }
             }
             it.onFailure {
@@ -87,14 +98,7 @@ class GroupTestScreen : Fragment(R.layout.group_test_screen) {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        getGroupTests()
-    }
-
-    private fun getGroupTests() {
-        viewModel.getGroupTests(requireArguments().get(ID).toString())
-    }
+    private fun getGroupId() = requireArguments().get(ID).toString()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -121,9 +125,13 @@ class GroupTestScreen : Fragment(R.layout.group_test_screen) {
                         is UiStateObject.SUCCESS -> {
                             binding.refreshLayout.disableRefresh()
                             if (it.data.data.isNotEmpty()) {
-                                refreshGroupTestAdapter(it.data.data)
+                                binding.rvGroupTests.show()
+                                refreshGroupTestAdapter(it.data.data.reversed())
                                 binding.tvEmpty.hide()
-                            } else binding.tvEmpty.show()
+                            } else {
+                                binding.tvEmpty.show()
+                                binding.rvGroupTests.hide()
+                            }
                         }
 
                         is UiStateObject.ERROR -> {
@@ -153,7 +161,7 @@ class GroupTestScreen : Fragment(R.layout.group_test_screen) {
             findNavController().navigate(
                 R.id.action_groupTestScreen_to_groupPupilsScreen,
                 bundleOf(
-                    ID to requireArguments().get(ID).toString()
+                    ID to getGroupId()
                 )
             )
         }
@@ -192,7 +200,7 @@ class GroupTestScreen : Fragment(R.layout.group_test_screen) {
 
     private fun forwardTest(testId: String) {
         binding.refreshLayout.enableRefresh()
-        viewModel.forwardTest(testId, requireArguments().get(ID).toString()) {
+        viewModel.forwardTest(testId, getGroupId()) {
             it.onSuccess {
                 toast(getString(R.string.str_forward_success))
                 binding.refreshLayout.disableRefresh()
@@ -222,9 +230,24 @@ class GroupTestScreen : Fragment(R.layout.group_test_screen) {
                 R.id.action_groupTestScreen_to_groupTestResultScreen,
                 bundleOf(
                     TEST_ID to testId,
-                    GROUP_ID to requireArguments().get(ID).toString()
+                    GROUP_ID to getGroupId()
                 )
             )
+        }
+
+        groupTestAdapter.onTestVisibility = { position, testId, visibility ->
+            loading.show()
+            viewModel.updateTestVisibility(testId, getGroupId(), visibility) {
+                it.onSuccess {
+                    groupTestAdapter.changeVisibility(position, visibility)
+                    loading.hide()
+                }
+                it.onFailure {
+                    toast(getString(R.string.str_error))
+                    //groupTestAdapter.changeVisibility(position, !visibility)
+                    loading.hide()
+                }
+            }
         }
     }
 

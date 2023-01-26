@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "452180889336",
+    "project_id": "renessans-7",
+    "storage_bucket": "renessans-7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452180889336:android:a19e120215fd5a49f8f50d",
+        "android_client_info": {
+          "package_name": "com.example.renessans7"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452180889336-v7huqtigd4m75dikkbnkkjvhco22ue74.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.renessans7",
+            "certificate_hash": "a85ec11a2965694f0f9917429f93f3e0b9afc0e2"
+          }
+        },
+        {
+          "client_id": "452180889336-ogqs5s7n50703h1rvpv1om7pookcm655.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfnTsgVF-rdGuZy8OOlkj8z6w8du-OM4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "452180889336-ogqs5s7n50703h1rvpv1om7pookcm655.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

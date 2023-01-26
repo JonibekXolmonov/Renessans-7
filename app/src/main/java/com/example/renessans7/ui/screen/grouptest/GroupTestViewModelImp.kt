@@ -75,4 +75,19 @@ class GroupTestViewModelImp @Inject constructor(private val testRepository: Test
             }
         }
     }
+
+    override fun updateTestVisibility(
+        testId: String,
+        classId: String,
+        visible: Boolean,
+        block: (Result<BaseResponse<Any>>) -> Unit
+    ) {
+        viewModelScope.launch {
+            try {
+                block(Result.success(testRepository.updateTestVisibility(testId, classId, visible)))
+            } catch (e: Exception) {
+                block(Result.failure(e))
+            }
+        }
+    }
 }

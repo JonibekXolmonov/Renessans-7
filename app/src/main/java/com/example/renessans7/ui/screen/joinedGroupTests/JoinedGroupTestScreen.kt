@@ -58,9 +58,13 @@ class JoinedGroupTestScreen : Fragment(R.layout.joined_group_test_screen) {
                         is UiStateObject.SUCCESS -> {
                             binding.refreshLayout.disableRefresh()
                             if (it.data.data.isNotEmpty()) {
-                                refreshAdapter(it.data.data)
+                                binding.rvGroupTests.show()
+                                refreshAdapter(it.data.data.reversed())
                                 binding.tvEmpty.hide()
-                            } else binding.tvEmpty.show()
+                            } else {
+                                binding.rvGroupTests.hide()
+                                binding.tvEmpty.show()
+                            }
                         }
                         is UiStateObject.ERROR -> {
                             binding.refreshLayout.disableRefresh()
@@ -107,5 +111,4 @@ class JoinedGroupTestScreen : Fragment(R.layout.joined_group_test_screen) {
         super.onDestroyView()
         _binding = null
     }
-
 }

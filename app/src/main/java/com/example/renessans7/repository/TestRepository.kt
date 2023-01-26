@@ -25,4 +25,7 @@ class TestRepository @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getGroupTestResult(testId: String, classId: String) =
         apiService.getGroupTestResult(testId, classId)
+
+    suspend fun updateTestVisibility(testId: String, classId: String, visible: Boolean) =
+        apiService.updateTestVisibility(testId, classId, visible)
 }

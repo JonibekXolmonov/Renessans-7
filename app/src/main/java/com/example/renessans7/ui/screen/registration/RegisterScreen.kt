@@ -69,26 +69,20 @@ class RegisterScreen : Fragment(R.layout.register_screen) {
             if (isRetypedCorrectly()) binding.edtRePasswordLayout.isErrorEnabled = false
         }
 
-        binding.checkBoxTeacher.setOnCheckedChangeListener { _, checked ->
-            if (checked) binding.tvTeacherRole.show()
-            else binding.tvTeacherRole.hide()
-        }
-
         binding.btnRegister.setOnClickListener {
             if (!isRetypedCorrectly()) binding.edtRePasswordLayout.enableError(getString(R.string.str_retype_incorrrect))
             else if (!isFullNameCorrectInput()) toast(getString(R.string.str_fullname_not_filled))
             else if (!binding.edtUsername.isNotBlank()) binding.edtUsernameLayout.enableError(
                 getString(R.string.str_error_username_length)
             )
-            else register(binding.checkBoxTeacher.isChecked)
+            else register()
         }
 
     }
 
-    private fun register(isTeacher: Boolean) {
+    private fun register() {
         binding.btnRegister.setLoading(requireContext())
-        if (isTeacher) registerTeacher()
-        else registerPupil()
+        registerPupil()
     }
 
     private fun registerPupil() {

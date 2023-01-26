@@ -132,7 +132,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/rvTeachers"
         app:layout_constraintTop_toBottomOf="@id/tvTeacherName"
-        tools:listitem="@layout/item_group_list" />
+        tools:listitem="@layout/item_group_list_teacher" />
 
     <TextView
         android:id="@+id/tvEmptyGroups"

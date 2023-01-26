@@ -126,32 +126,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/checkBoxTeacher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/str_is_teacher"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:buttonTint="@color/main_red"
-            app:layout_constraintEnd_toEndOf="@id/edtRePasswordLayout"
-            app:layout_constraintTop_toBottomOf="@id/edtRePasswordLayout" />
-
-        <TextView
-            android:id="@+id/tvTeacherRole"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/str_teacher_role"
-            android:textAlignment="textEnd"
-            android:textColor="@color/black_main_grey"
-            android:textSize="16sp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/checkBoxTeacher"
-            app:layout_constraintStart_toStartOf="@id/edtRePasswordLayout"
-            app:layout_constraintTop_toBottomOf="@id/checkBoxTeacher" />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
@@ -166,7 +140,7 @@
             android:layout_marginTop="8dp"
             android:textSize="16sp"
             app:backgroundTint="@null"
-            app:layout_constraintTop_toBottomOf="@id/tvTeacherRole"
+            app:layout_constraintTop_toBottomOf="@id/edtRePasswordLayout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

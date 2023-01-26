@@ -87,7 +87,7 @@ class AllTests(private val block: (String) -> Unit) :
                         }
 
                         is UiStateObject.SUCCESS -> {
-                            refreshGroupTestAdapter(it.data.data)
+                            refreshGroupTestAdapter(it.data.data.reversed())
                             loading.dismiss()
                         }
                         is UiStateObject.ERROR -> {

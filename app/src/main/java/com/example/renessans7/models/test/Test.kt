@@ -5,5 +5,6 @@ data class Test(
     val fileUrl: String,
     val testDate: String,
     val testName: String,
-    val numberOfQuestions: Int
+    val numberOfQuestions: Int,
+    var visible: Boolean
 )

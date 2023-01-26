@@ -69,9 +69,13 @@ class GroupPupilsScreen : Fragment(R.layout.group_pupils_screen) {
                             binding.tvGroupName.text = it.data.data.name
                             val groups = it.data.data.pupils.filter { it.isEnabled }
                             if (groups.isNotEmpty()) {
+                                binding.rvGroupPupils.show()
                                 refreshAdapter(groups)
                                 binding.tvEmpty.hide()
-                            } else binding.tvEmpty.show()
+                            } else {
+                                binding.rvGroupPupils.hide()
+                                binding.tvEmpty.show()
+                            }
                         }
                         is UiStateObject.ERROR -> {
                             binding.refreshLayout.disableRefresh()

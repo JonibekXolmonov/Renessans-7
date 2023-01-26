@@ -11,7 +11,9 @@ class TeacherRepository @Inject constructor(private val apiService: ApiService) 
 
     suspend fun addGroup(groupRequest: AddGroupRequest) = apiService.addGroup(groupRequest)
 
-    suspend fun getGroupPupils(classId: String) = apiService.getAllGroupPupils(classId)
+    suspend fun editGroup(editGroupRequest: AddGroupRequest,classId: String) = apiService.editGroup(editGroupRequest,classId)
+
+    suspend fun getGroupPupils(classId: String) = apiService.getGroupDataAndMembers(classId)
 
     suspend fun getRequests() = apiService.getRequests()
 

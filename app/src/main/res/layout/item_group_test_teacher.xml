@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvLesson"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="24dp"
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="@color/lesson_item_color"
+    app:cardCornerRadius="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTestName"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="24dp"
+            android:textColor="@color/lesson_name_color"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@id/swIsActive"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTestQuestionNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_quiz"
+            android:drawablePadding="4dp"
+            android:paddingEnd="24dp"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black_main_grey"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvTestDate"
+            app:layout_constraintTop_toBottomOf="@id/tvTestName" />
+
+        <TextView
+            android:id="@+id/tvTestDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="24dp"
+            android:textColor="@color/lesson_name_color"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvTestQuestionNumber"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvTestQuestionNumber" />
+
+        <View
+            android:id="@+id/switchView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvTestName"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/swIsActive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:background="@null"
+            android:thumb="@drawable/custom_thumb"
+            android:track="@drawable/custom_track"
+            app:background="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

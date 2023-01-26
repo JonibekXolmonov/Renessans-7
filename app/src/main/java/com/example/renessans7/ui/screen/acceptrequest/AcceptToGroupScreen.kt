@@ -56,9 +56,13 @@ class AcceptToGroupScreen : Fragment(R.layout.accept_to_group_screen) {
                         is UiStateObject.SUCCESS -> {
                             binding.refreshLayout.disableRefresh()
                             if (it.data.data.isNotEmpty()) {
+                                binding.rvJoinRequests.show()
                                 refreshAdapter(it.data.data)
                                 binding.tvEmpty.hide()
-                            } else binding.tvEmpty.show()
+                            } else {
+                                binding.tvEmpty.show()
+                                binding.rvJoinRequests.hide()
+                            }
                         }
                         is UiStateObject.ERROR -> {
                             binding.refreshLayout.disableRefresh()

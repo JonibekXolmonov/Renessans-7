@@ -33,7 +33,7 @@ fun EditText.isNotEmpty() = text.isNotEmpty()
 fun TextInputEditText.isNotBlank() = text.toString().isNotBlank()
 
 fun Fragment.toast(msg: String) {
-    Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
+    Toast.makeText(requireActivity(), msg, Toast.LENGTH_LONG).show()
 }
 
 private fun TabLayout.setUp(viewPager: ViewPager2, labels: List<String>) {
@@ -91,3 +91,7 @@ fun SwipeRefreshLayout.disableRefresh() {
 fun Fragment.back() {
     requireActivity().onBackPressed()
 }
+
+fun Long.getDuration() = String.format(
+    "%02d:%02d", (this / 60) % 60, this % 60
+)

@@ -115,14 +115,14 @@
             android:layout_marginVertical="8dp"
             android:paddingHorizontal="24dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_group_list" />
+            tools:listitem="@layout/item_group_list_teacher" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <TextView
         android:id="@+id/tvEmpty"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@color/main_background"
         android:gravity="center"
         android:text="@string/str_no_joined_groups"

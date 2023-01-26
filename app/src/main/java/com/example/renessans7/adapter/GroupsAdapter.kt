@@ -49,7 +49,7 @@ class GroupsAdapter : ListAdapter<Group, GroupsAdapter.VH>(DiffUtil()) {
 
             root.setOnClickListener {
                 root.setStroke(3, root.context.resources.getColor(R.color.main_red))
-                onClick.invoke(getItem(position).classId, getItem(position).className)
+                onClick.invoke(getItem(position).classId!!, getItem(position).className!!)
                 lastSelectedPos = currentSelectedPos
                 currentSelectedPos = holder.absoluteAdapterPosition
 

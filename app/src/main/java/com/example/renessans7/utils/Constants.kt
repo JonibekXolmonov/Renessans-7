@@ -18,9 +18,12 @@ object Constants {
     const val EXIST_FILE = 1
     const val ACCEPT = 0
     const val CANCEL = 1
-    const val TEST_BASE_URL = "http://192.168.43.149:8082"
-    const val BASE_URL = "http://192.168.43.149:8082/api/v1/"
+    const val TEST_BASE_URL = "https://renessans-app.herokuapp.com"
+    const val BASE_URL = "https://renessans-app.herokuapp.com/api/v1/"
+    const val LOCAL_TEST_BASE_URL = "http://192.168.1.5:8082/api/v1/"
     const val NULL = "null"
     const val TEST_ID = "testId"
     const val GROUP_ID = "groupId"
+    const val EDIT = "edit"
+    const val BLANK = ""
 }

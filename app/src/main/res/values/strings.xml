@@ -75,4 +75,12 @@
     <string name="str_error_load">Test\'s pdf file loading error</string>
     <string name="str_locked">Account was locked by admin.</string>
     <string name="str_restore_success">Activated successfully</string>
+    <string name="str_editted_success">Group editted successfully.</string>
+    <string name="str_error_fetch_data">Error getting group\'s name and description</string>
+    <string name="str_update">Save changes</string>
+    <string name="str_group_edit">Group editing</string>
+    <string name="str_finish">Finish</string>
+    <string name="str_00_00">00:00</string>
+    <string name="str_get_group_data">Getting group name and description.</string>
+
 </resources>

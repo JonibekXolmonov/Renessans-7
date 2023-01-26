@@ -58,10 +58,14 @@ class MainScreen : Fragment(R.layout.main_screen) {
                         is UiStateObject.SUCCESS -> {
                             binding.refreshLayout.disableRefresh()
                             if (it.data.data.isNotEmpty()) {
+                                binding.rvMyGroups.show()
                                 refreshAdapter(it.data.data)
                                 binding.tvEmpty.hide()
                             }
-                            else binding.tvEmpty.show()
+                            else {
+                                binding.rvMyGroups.hide()
+                                binding.tvEmpty.show()
+                            }
                         }
                         is UiStateObject.ERROR -> {
                             binding.refreshLayout.disableRefresh()

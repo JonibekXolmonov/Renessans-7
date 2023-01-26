@@ -58,9 +58,13 @@ class PupilNotificationScreen : Fragment(R.layout.pupil_notification_screen) {
                         is UiStateObject.SUCCESS -> {
                             binding.refreshLayout.disableRefresh()
                             if (it.data.data.isNotEmpty()) {
+                                binding.rvMyRequests.show()
                                 refreshAdapter(it.data.data)
                                 binding.tvEmpty.hide()
-                            } else binding.tvEmpty.show()
+                            } else {
+                                binding.rvMyRequests.hide()
+                                binding.tvEmpty.show()
+                            }
                         }
                         is UiStateObject.ERROR -> {
                             binding.refreshLayout.disableRefresh()

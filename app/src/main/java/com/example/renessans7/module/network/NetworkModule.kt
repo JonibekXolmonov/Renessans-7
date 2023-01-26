@@ -4,6 +4,7 @@ import com.example.renessans7.module.service.ApiService
 import com.example.renessans7.utils.Constants.AUTHORIZATION
 import com.example.renessans7.utils.Constants.BASE_URL
 import com.example.renessans7.utils.Constants.BEARER
+import com.example.renessans7.utils.Constants.LOCAL_TEST_BASE_URL
 import com.example.renessans7.utils.SharedPref
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
