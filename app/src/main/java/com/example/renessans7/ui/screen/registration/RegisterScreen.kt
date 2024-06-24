@@ -81,21 +81,21 @@ class RegisterScreen : Fragment(R.layout.register_screen) {
     }
 
     private fun register() {
-        binding.btnRegister.setLoading(requireContext())
+        binding.btnRegister.setShowProgress(true)
         registerPupil()
     }
 
     private fun registerPupil() {
         viewModel.registerAsPupil(getUser()) {
             it.onSuccess {
-                binding.btnRegister.setLoading(requireContext())
+                binding.btnRegister.setShowProgress(true)
                 sharedPref.token = it.data.token
                 findNavController().navigate(R.id.action_registerScreen_to_mainScreen)
             }
             it.onFailure {
                 binding.btnRegister.disableLoading()
                 if (it.localizedMessage?.contains("409") == true) {
-                    toast(getString(R.string.str_username_error))
+                    toast(getString(R.string.str_username_occupied))
                 } else if (it.message?.contains("406") == true) {
                     toast(getString(R.string.str_password_error))
                 } else {

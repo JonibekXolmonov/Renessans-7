@@ -72,6 +72,7 @@
                 android:layout_marginHorizontal="24dp"
                 android:background="@drawable/rounded_white_background"
                 android:elevation="4dp"
+                android:singleLine="true"
                 android:imeOptions="actionDone"
                 android:gravity="center_vertical"
                 android:hint="@string/str_description_for_the_group"

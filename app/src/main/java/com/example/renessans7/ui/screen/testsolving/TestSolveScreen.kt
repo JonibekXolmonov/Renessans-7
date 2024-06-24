@@ -1,8 +1,8 @@
 package com.example.renessans7.ui.screen.testsolving
 
+import android.app.Dialog
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +17,10 @@ import com.example.renessans7.databinding.TestSolveScreenBinding
 import com.example.renessans7.models.test.TestAnswers
 import com.example.renessans7.models.test.TestCheckRequest
 import com.example.renessans7.ui.screen.testresult.TestResultDialog
+import com.example.renessans7.utils.Constants.FILE_PREFIX
 import com.example.renessans7.utils.Constants.ID
 import com.example.renessans7.utils.Constants.NULL
-import com.example.renessans7.utils.PDFUtil.loadPdfToViewer
+import com.example.renessans7.utils.ProgressBarDialog
 import com.example.renessans7.utils.back
 import com.example.renessans7.utils.getDuration
 import com.example.renessans7.utils.helper.UiStateList
@@ -39,10 +40,12 @@ class TestSolveScreen : Fragment(R.layout.test_solve_screen) {
     private lateinit var bottomSheet: View
     private val viewModel: TestViewModel by viewModels<TestViewModelImp>()
     private lateinit var countDownTimer: CountDownTimer
+    private lateinit var loading: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getTestById(requireArguments().get(ID).toString())
+        loading = ProgressBarDialog(requireContext())
     }
 
     override fun onCreateView(
@@ -51,7 +54,20 @@ class TestSolveScreen : Fragment(R.layout.test_solve_screen) {
         _binding = TestSolveScreenBinding.inflate(inflater, container, false)
         observeGroupTests()
         observeAnswers()
+        observeFileLoadMessage()
         return binding.root
+    }
+
+    private fun observeFileLoadMessage() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.fileLoadMessage.collect { message ->
+                    if (message.isNotBlank()) {
+                        toast(message)
+                    }
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -88,15 +104,17 @@ class TestSolveScreen : Fragment(R.layout.test_solve_screen) {
     }
 
     private fun checkTest() {
+        loading.show()
         viewModel.check(getTestResult()) {
             it.onSuccess {
+                loading.hide()
                 TestResultDialog(it.data) {
-                    requireActivity().onBackPressed()
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
                 }.show(childFragmentManager, this::class.simpleName)
-
             }
             it.onFailure {
                 toast(getString(R.string.str_error))
+                loading.hide()
             }
         }
     }
@@ -128,15 +146,17 @@ class TestSolveScreen : Fragment(R.layout.test_solve_screen) {
                         }
 
                         is UiStateObject.SUCCESS -> {
-                            loadPdfToViewer(
-                                it.data.data.fileUrl,
+                            viewModel.loadPdfToView(
+                                FILE_PREFIX + it.data.data.fileUrl,
                                 binding.pdfViewer!!
                             )
                             refreshAnswerInsertion(initArray(it.data.data.numberOfQuestions))
                             startTimeCounter(getTimeInMillis(it.data.data.numberOfQuestions))
                         }
+
                         is UiStateObject.ERROR -> {
                         }
+
                         else -> {}
                     }
                 }
@@ -150,7 +170,7 @@ class TestSolveScreen : Fragment(R.layout.test_solve_screen) {
         in 10..14 -> 21 * 60 * 1000
         in 15..24 -> 31 * 60 * 1000
         in 25..34 -> 41 * 60 * 1000
-        else ->            59 * 60 * 1000
+        else -> 59 * 60 * 1000
     }
 
     private fun observeAnswers() {
@@ -166,8 +186,10 @@ class TestSolveScreen : Fragment(R.layout.test_solve_screen) {
                                 TestAnswers(0, an)
                             })
                         }
+
                         is UiStateList.ERROR -> {
                         }
+
                         else -> {}
                     }
                 }

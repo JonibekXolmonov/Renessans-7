@@ -30,7 +30,7 @@ class TestResultDialog(
 
             cvNext.setOnClickListener {
                 onNextClick.invoke()
-                dismissNow()
+                dismissAllowingStateLoss()
             }
         }
         isCancelable = false

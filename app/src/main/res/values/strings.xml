@@ -20,6 +20,7 @@
     <string name="str_teacher_role">If you register as a teacher, you can create groups and upload tests for your groups</string>
     <string name="str_password_error">Wrong password!</string>
     <string name="str_username_error">Username not found!</string>
+    <string name="str_username_occupied">Username already taken!</string>
     <string name="str_my_groups">My groups</string>
     <string name="str_test_for_group">Tests uploaded for this group</string>
     <string name="str_test_results">Test results</string>

@@ -1,13 +1,17 @@
 package com.example.renessans7.utils
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.widget.ViewPager2
+import com.example.renessans7.R
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.progressindicator.CircularProgressIndicatorSpec
@@ -62,18 +66,27 @@ fun MaterialCardView.setStroke(width: Int, color: Int) {
     strokeColor = color
 }
 
-fun MaterialButton.setLoading(context: Context) {
-    val spec = CircularProgressIndicatorSpec(
-        context,  /*attrs=*/
-        null,
-        0,
-        com.google.android.material.R.style.Widget_Material3_CircularProgressIndicator_ExtraSmall
-    )
-    val progressIndicatorDrawable = IndeterminateDrawable.createCircularDrawable(context, spec)
-    progressIndicatorDrawable.setColorFilter(
-        0xffff0000.toInt(), android.graphics.PorterDuff.Mode.MULTIPLY
-    )
-    this.icon = progressIndicatorDrawable
+fun MaterialButton.setShowProgress(showProgress: Boolean?) {
+    icon = if (showProgress == true) {
+        CircularProgressDrawable(context!!).apply {
+            setStyle(CircularProgressDrawable.DEFAULT)
+            setColorSchemeColors(ContextCompat.getColor(context!!, R.color.white))
+            start()
+        }
+    } else null
+    if (icon != null) { // callback to redraw button icon
+        icon.callback = object : Drawable.Callback {
+            override fun unscheduleDrawable(who: Drawable, what: Runnable) {
+            }
+
+            override fun invalidateDrawable(who: Drawable) {
+                this@setShowProgress.invalidate()
+            }
+
+            override fun scheduleDrawable(who: Drawable, what: Runnable, `when`: Long) {
+            }
+        }
+    }
 }
 
 fun MaterialButton.disableLoading() {
@@ -89,7 +102,7 @@ fun SwipeRefreshLayout.disableRefresh() {
 }
 
 fun Fragment.back() {
-    requireActivity().onBackPressed()
+    requireActivity().onBackPressedDispatcher.onBackPressed()
 }
 
 fun Long.getDuration() = String.format(

@@ -1,10 +1,8 @@
 package com.example.renessans7.ui.screen.registration
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.renessans7.models.BaseResponse
-import com.example.renessans7.models.login.LoginRequest
 import com.example.renessans7.models.login.AuthResponse
 import com.example.renessans7.models.register.RegisterRequest
 import com.example.renessans7.repository.AuthRepository

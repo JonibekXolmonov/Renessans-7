@@ -11,32 +11,35 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.InputStream
+import java.net.HttpURLConnection
 import java.net.URL
+import javax.inject.Inject
 
-object PDFUtil {
-    fun Fragment.loadPdfToViewer(url: String, pdfView: PDFView) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                try {
-                    val input: InputStream =
-                        withContext(Dispatchers.IO) {
-                            URL(url).openStream()
-                        }
-                    pdfView.fromStream(input)
-                        .enableSwipe(true) // allows to block changing pages using swipe
-                        .enableDoubletap(true)
-                        .defaultPage(0)
-                        .enableAnnotationRendering(false) // render annotations (such as comments, colors or forms)
-                        .password(null)
-                        .scrollHandle(null)
-                        .enableAntialiasing(true) // improve rendering a little bit on low-res screens
-                        // spacing between pages in dp. To define spacing color, set view background
-                        .spacing(0)
-                        .load()
-                } catch (e: Exception) {
-                    toast(getString(R.string.str_error_load))
-                }
+class PDFUtil @Inject constructor(private val sharedPref: SharedPref) {
+    suspend fun loadPdfToViewer(url: String, pdfView: PDFView, onError: (String) -> Unit) {
+        try {
+            val input: InputStream = withContext(Dispatchers.IO) {
+                val connection = URL(url).openConnection() as HttpURLConnection
+                connection.setRequestProperty(
+                    Constants.AUTHORIZATION,
+                    "${Constants.BEARER}${sharedPref.token}"
+                ) // Add token in header (more secure)
+                connection.inputStream
             }
+
+            pdfView.fromStream(input)
+                .enableSwipe(true) // allows to block changing pages using swipe
+                .enableDoubletap(true)
+                .defaultPage(0)
+                .enableAnnotationRendering(false) // render annotations (such as comments, colors or forms)
+                .password(null)
+                .scrollHandle(null)
+                .enableAntialiasing(true) // improve rendering a little bit on low-res screens
+                // spacing between pages in dp. To define spacing color, set view background
+                .spacing(0)
+                .load()
+        } catch (e: Exception) {
+            onError(sharedPref.context.getString(R.string.str_error_load))
         }
     }
 }

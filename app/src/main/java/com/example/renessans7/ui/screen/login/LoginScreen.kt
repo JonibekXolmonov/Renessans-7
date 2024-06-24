@@ -86,7 +86,7 @@ class LoginScreen : Fragment(R.layout.login_screen) {
     }
 
     private fun login(user: LoginRequest) {
-        binding.btnLogin.setLoading(requireContext())
+        binding.btnLogin.setShowProgress(true)
         viewModel.login(user) {
             it.onSuccess {
                 if (it.success) {

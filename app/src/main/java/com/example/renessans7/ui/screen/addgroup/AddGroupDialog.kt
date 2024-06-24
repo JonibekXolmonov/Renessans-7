@@ -15,6 +15,8 @@ import com.example.renessans7.utils.Constants.BLANK
 import com.example.renessans7.utils.ProgressBarDialog
 import com.example.renessans7.utils.isNotEmpty
 import com.example.renessans7.utils.toast
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,6 +32,12 @@ class AddGroupDialog(private val groupId: String, private val onAddSuccess: () -
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loading = ProgressBarDialog(requireActivity())
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = BottomSheetDialog(requireContext(), theme)
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        return dialog
     }
 
     private fun getGroupData() {

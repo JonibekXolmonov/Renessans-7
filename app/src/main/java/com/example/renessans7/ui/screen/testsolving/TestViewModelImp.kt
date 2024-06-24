@@ -10,15 +10,22 @@ import com.example.renessans7.models.test.TestCheckRequest
 import com.example.renessans7.models.test.TestCheckResponse
 import com.example.renessans7.repository.AuthRepository
 import com.example.renessans7.repository.TestRepository
+import com.example.renessans7.utils.Constants
+import com.example.renessans7.utils.Constants.BLANK
+import com.example.renessans7.utils.PDFUtil
 import com.example.renessans7.utils.helper.UiStateList
 import com.example.renessans7.utils.helper.UiStateObject
+import com.github.barteksc.pdfviewer.PDFView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TestViewModelImp @Inject constructor(private val testRepository: TestRepository) :
+class TestViewModelImp @Inject constructor(
+    private val testRepository: TestRepository,
+    private val pdfUtil: PDFUtil
+) :
     ViewModel(), TestViewModel {
 
     private val _test = MutableStateFlow<UiStateObject<BaseResponse<Test>>>(UiStateObject.EMPTY)
@@ -26,6 +33,9 @@ class TestViewModelImp @Inject constructor(private val testRepository: TestRepos
 
     private val _answers = MutableStateFlow<UiStateList<String>>(UiStateList.EMPTY)
     override val answers = _answers
+
+    private val _fileLoadMessage = MutableStateFlow(BLANK)
+    override val fileLoadMessage = _fileLoadMessage
 
     override fun saveAnswers(answers: List<String>) {
         viewModelScope.launch {
@@ -53,6 +63,14 @@ class TestViewModelImp @Inject constructor(private val testRepository: TestRepos
             } catch (e: Exception) {
                 block(Result.failure(e))
             }
+        }
+    }
+
+    override fun loadPdfToView(pdfUrl: String, pdfViewer: PDFView) {
+        viewModelScope.launch {
+            pdfUtil.loadPdfToViewer(pdfUrl, pdfViewer, onError = {
+                _fileLoadMessage.value = it
+            })
         }
     }
 }

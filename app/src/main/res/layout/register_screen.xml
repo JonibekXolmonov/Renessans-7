@@ -135,6 +135,7 @@
             android:clickable="false"
             android:elevation="4dp"
             android:text="@string/str_register"
+            app:iconGravity="end"
             android:textAllCaps="false"
             android:layout_marginBottom="24dp"
             android:layout_marginTop="8dp"
